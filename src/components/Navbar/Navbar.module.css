@@ -1,0 +1,9 @@
+.navContainer {
+  background: red;
+  grid-area: "navbar";
+  padding: 10px;
+}
+
+.navContainer a {
+  font-size: 23px;
+}

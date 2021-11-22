@@ -1,0 +1,16 @@
+.homeContainer h1 {
+  font-size: 46px;
+  padding-bottom: 10px;
+}
+
+.homeContainer ul {
+  margin-left: 10px;
+}
+.homeContainer ul li a {
+  color: black;
+  font-size: 36px;
+}
+.homeContainer ul li a:hover {
+  font-weight: 500;
+  transition-duration: 100ms;
+}
