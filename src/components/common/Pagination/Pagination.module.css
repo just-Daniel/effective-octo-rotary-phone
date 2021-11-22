@@ -1,0 +1,31 @@
+.pagination {
+  display: inline-block;
+}
+.pagination span {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.pagination button {
+  padding: 5px 11px;
+  margin: 0 3px;
+  font-size: 18px;
+  border-radius: 50%;
+  border: 1px solid #4caf50;
+}
+
+.pagination span.active {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination span:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.pagination span.disabled {
+  cursor: not-allowed;
+}
