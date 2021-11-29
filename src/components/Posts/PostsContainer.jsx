@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Post } from './Posts';
 import { getPosts, getCountPosts } from '../../redux/posts-reducer'
-import Loader from '../Loader/Loader';
+import Loader from '../common/Loader/Loader';
 
 class PostsContainer extends React.Component {
     componentDidMount() {

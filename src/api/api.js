@@ -1,9 +1,5 @@
 import * as axios from 'axios';
 
-// axios.get(`https://ekreative-json-server.herokuapp.com/posts`).then(res => {
-//     console.log('result:', res);
-// })
-
 const instance = axios.create({
     baseURL: 'https://ekreative-json-server.herokuapp.com/'
 })
@@ -17,3 +13,8 @@ export const articleAPI = {
     }
 }
 
+export const announcementAPI = {
+    getAnnouncements () {
+        return instance.get(`announcements`).then(res=> res.data);
+    }
+}
