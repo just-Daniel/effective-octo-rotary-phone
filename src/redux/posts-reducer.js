@@ -55,14 +55,14 @@ const setCountPostAC = countPosts => ({type: SET_COUNT_POSTS, payload: countPost
 const setCurrentPageAC = currentPage => ({type: SET_CURRENT_PAGE, payload: currentPage});
 const toggleIsFetchingAC = isFetching => ({type: TOGGLE_IS_FETCHING, payload: isFetching});
 
-export const getPosts = (currentPage, limitPage) => dispatch => {
+export const getPosts = (currentPage, limitPage) => async dispatch => {
     dispatch(toggleIsFetchingAC(true))
     dispatch(setCurrentPageAC(currentPage))
 
-    articleAPI.getPosts(currentPage, limitPage).then(posts => { 
-        dispatch(toggleIsFetchingAC(false))   
-        dispatch(setPostsAC(posts.data))
-    })
+    const posts = await articleAPI.getPosts(currentPage, limitPage);
+    dispatch(toggleIsFetchingAC(false));  
+    dispatch(setPostsAC(posts.data));
+    
 }
 
 export const getCountPosts = () => dispatch => {

@@ -13,7 +13,9 @@ class PostsContainer extends React.Component {
         this.props.getPosts(currentPage, limitPage)
     }
 
-    onPageChanged = (currentPage) => {
+    onPageChanged = (event, currentPage) => {
+        console.log('event', event);
+        event.preventDefault();
         this.props.getPosts(currentPage, this.props.limitPage)
     }
 
@@ -27,8 +29,9 @@ class PostsContainer extends React.Component {
         return (
             <>
                 {
-                    this.props.isFetching ? <Loader />
-                    : <Post 
+                    this.props.isFetching && <Loader />
+                }
+                     <Post 
                         posts={ this.props.posts } 
                         countPosts={ this.props.countPosts }
                         limitPage={ this.props.limitPage }
@@ -41,7 +44,7 @@ class PostsContainer extends React.Component {
 
                         createPostHandler={ this.createPostHandler }
                     />
-                }
+                
             </>
         )
     }
