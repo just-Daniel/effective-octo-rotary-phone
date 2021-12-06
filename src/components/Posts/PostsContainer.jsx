@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Post } from './Posts';
+import { Post } from './Post';
 import { getPosts, getCountPosts } from '../../redux/posts-reducer'
 import Loader from '../common/Loader/Loader';
+import { changePost, submitPost } from '../../redux/form-reducer'
 
 class PostsContainer extends React.Component {
     componentDidMount() {
@@ -16,6 +17,12 @@ class PostsContainer extends React.Component {
         this.props.getPosts(currentPage, this.props.limitPage)
     }
 
+    createPostHandler = event => {
+        event.preventDefault();
+
+        // this.props.submitPost();
+    }
+
     render() {
         return (
             <>
@@ -27,6 +34,12 @@ class PostsContainer extends React.Component {
                         limitPage={ this.props.limitPage }
                         currentPage={ this.props.currentPage }
                         onPageChanged={ this.onPageChanged }
+
+
+                        onFormChanged={ this.onFormChanged }
+                        inputsPost={ this.props.inputsPost }
+
+                        createPostHandler={ this.createPostHandler }
                     />
                 }
             </>
@@ -39,12 +52,15 @@ const mapStateToProps = state => ({
     currentPage: state.posts.currentPage,
     limitPage: state.posts.limitPage,
     countPosts: state.posts.countPosts,
-    isFetching: state.posts.isFetching
+    isFetching: state.posts.isFetching,
+    inputsPost: state.form.post.inputControls
 })
 
 const mapDispatchToProps = {
     getPosts,
-    getCountPosts
+    getCountPosts,
+    changePost,
+    submitPost
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);

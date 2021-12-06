@@ -10,7 +10,6 @@ class AnnouncementContainer extends React.Component {
     }
     
     render() {
-        console.log('isFetching: ', this.props.isFetching);
         return (
             <>
                 {
