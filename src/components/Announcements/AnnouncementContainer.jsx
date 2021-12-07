@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getAnnouncements } from "../../redux/announcement-reducer";
-import Loader from "../common/Loader/Loader";
+import Loader from "../../UI/Loader/Loader";
 import { Announcement } from "./Announcement";
 
 class AnnouncementContainer extends React.Component {

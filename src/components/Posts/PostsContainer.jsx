@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Post } from './Post';
 import { getPosts, getCountPosts } from '../../redux/posts-reducer'
-import Loader from '../common/Loader/Loader';
+import Loader from '../../UI/Loader/Loader';
 import { changePost, submitPost } from '../../redux/form-reducer'
 
 class PostsContainer extends React.Component {

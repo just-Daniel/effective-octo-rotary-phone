@@ -1,6 +1,6 @@
 import React from 'react';
 import InputContainer from '../../UI/Input/InputContainer';
-import { Pagination } from '../common/Pagination/Pagination'
+import { Pagination } from '../../UI/Pagination/Pagination'
 
 export const Post = props => {
     return (
