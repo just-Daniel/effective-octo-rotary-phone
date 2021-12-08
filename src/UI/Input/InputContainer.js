@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Input from './Input';
-import { changePost } from '../../redux/form-reducer';
+import is from 'is_js'
 
 const validateInput = (value, validation) => {
     if (!validation) {
@@ -11,34 +10,44 @@ const validateInput = (value, validation) => {
     let isValid = true;
 
     if (validation.required) {
-        isValid = value.trim() !== '' && isValid
+        isValid = value.trim() !== '' && isValid;
+    }
+
+    if (validation.email) {
+        isValid = is.email(value) && isValid;
+    }
+
+    if (validation.minLength) {
+        isValid = value.length >= validation.minLength && isValid;
     }
 
     return isValid;
 }
 
 const InputContainer = props => {
+    //  Will add active input for change
+    //  Do not show error when prints text
     const onFormChanged = (event, inputName) => {
-        const postInputs = {...props.inputsPost};
-        const input = {...postInputs[inputName]};
+        const inputControls = {...props.inputControls};
+        const input = {...inputControls[inputName]};
     
         input.value = event.target.value;
         input.touched = true;
         input.valid = validateInput(input.value, input.validation);
-        postInputs[inputName] = input;
+        inputControls[inputName] = input;
     
         let isFormValid = true;
-    
-        Object.keys(postInputs).map(inputName => {
-            isFormValid = inputName.valid === true && isFormValid;
+        
+        Object.keys(inputControls).map(inputName => {
+            isFormValid = inputControls[inputName].valid === true && isFormValid;
             return isFormValid
         })
-        
-        props.changePost(postInputs, isFormValid)
+    
+        props.changeInputElement(inputControls, isFormValid)
     }
 
-    return Object.keys(props.inputsPost).map((inputName, index) => {
-        const input = props.inputsPost[inputName];
+    return Object.keys(props.inputControls).map((inputName, index) => {
+        const input = props.inputControls[inputName];
 
         return (
             <Input
@@ -50,17 +59,10 @@ const InputContainer = props => {
                 valid={ input.valid }
                 touched={ input.touched }
                 errorMessage={ input.errorMessage }
+                type={ input.type }
             />
         )
     })
 }
 
-const mapStateToProps = state => ({
-    inputsPost: state.form.post.inputControls
-})
-
-const mapDispatchToProps = {
-    changePost: changePost
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(InputContainer);
+export default InputContainer;

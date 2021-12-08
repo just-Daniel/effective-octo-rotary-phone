@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import AnnouncementContainer from './components/Announcements/AnnouncementContainer';
+import LoginContainer from './components/Auth/LoginContainer';
 import { Header } from './components/Header/Header';
 import { Home } from './components/Home/Home';
 import { Navbar } from './components/Navbar/Navbar';
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path='/posts' element={ <PostsContainer /> } />
             <Route path='/announcements' element={ <AnnouncementContainer /> } />
+            <Route path='/login' element={ <LoginContainer /> } />
             <Route path='/' exact element={ <Home /> } />
           </Routes>
         </div>

@@ -41,6 +41,7 @@ class PostsContainer extends React.Component {
 
                         onFormChanged={ this.onFormChanged }
                         inputsPost={ this.props.inputsPost }
+                        changePost={ this.props.changePost }
 
                         createPostHandler={ this.createPostHandler }
                     />

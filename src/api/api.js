@@ -9,12 +9,18 @@ export const articleAPI = {
         return instance.get(`posts?_page=${currentPage}&_limit=${limitPage}`)
     },
     getCountPosts() {
-        return instance.get(`posts`).then(res => res.data.length)
+        return instance.get(`posts`).then(res => res.data.length);
     }
 }
 
 export const announcementAPI = {
     getAnnouncements () {
         return instance.get(`announcements`).then(res=> res.data);
+    }
+}
+
+export const authAPI = {
+    login (user) {
+        return instance.post('login', user).then(res => res.data);
     }
 }

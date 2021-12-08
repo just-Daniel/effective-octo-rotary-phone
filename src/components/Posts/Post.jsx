@@ -8,7 +8,10 @@ export const Post = props => {
             <form>
                 <h2>Create new post</h2>
 
-                <InputContainer />
+                <InputContainer 
+                    inputControls={props.inputsPost}
+                    changeInputElement={props.changePost}
+                />
 
                 <button onClick={ props.createPostHandler }>Create</button>
             </form>
