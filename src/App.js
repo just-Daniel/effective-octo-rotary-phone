@@ -1,32 +1,50 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import AnnouncementContainer from './components/Announcements/AnnouncementContainer';
 import LoginContainer from './components/Auth/LoginContainer';
-import { Header } from './components/Header/Header';
+import Header from './components/Header/Header';
 import { Home } from './components/Home/Home';
 import { Navbar } from './components/Navbar/Navbar';
 import PostsContainer from './components/Posts/PostsContainer';
+import User from './components/User/User';
+import { autoLogin } from './redux/auth-reducer'
 
-function App() {
-  return (
-    <div className="App">
-      <div className="app-wrapper">
-        <Header />
-        <Navbar />
-        <div style={{background: 'aliceblue'}} className="main-content">
+class App extends React.Component {
+  componentDidMount() {
+    // this.props.autoLogin()
+    // Maybe use redux-persist for save state
+  }
 
-          <Routes>
-            <Route path='/posts' element={ <PostsContainer /> } />
-            <Route path='/announcements' element={ <AnnouncementContainer /> } />
-            <Route path='/login' element={ <LoginContainer /> } />
-            <Route path='/' exact element={ <Home /> } />
-          </Routes>
+  render () {
+    return (
+      <div className="App">
+        <div className="app-wrapper">
+          <Header />
+          <Navbar />
+          <div style={{background: 'aliceblue'}} className="main-content">
+
+            <Routes>
+              <Route path='/posts' element={ <PostsContainer /> } />
+              <Route path='/announcements' element={ <AnnouncementContainer /> } />
+              <Route path='/login' element={ <LoginContainer /> } />
+              <Route path='/user' element={ <User /> } />
+              <Route path='/' exact element={ <Home /> } />
+            </Routes>
+          </div>
+
         </div>
-
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = {
+  autoLogin
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
