@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { authAPI } from '../../api/api';
-import { authSuccess, autoLogout } from '../../redux/auth-reducer';
+import { login } from '../../redux/auth-reducer';
 import { changeLogin } from '../../redux/form-reducer';
 import InputContainer from '../../UI/Input/InputContainer';
 
-const loginHandler = async (event, inputControls, props) => {
+const loginHandler = (event, inputControls, props, setOnClickDisabled) => {
     event.preventDefault();
-    console.log('inputControls: ', inputControls);
+    setOnClickDisabled(true);
+
     // const user = {
     //     email: inputControls.email.value, 
     //     password: inputControls.password.value
@@ -17,30 +17,17 @@ const loginHandler = async (event, inputControls, props) => {
         email: 'carolina37@gmail.com', 
         password: 'bestPassw0rd'
     }
-    const data = await authAPI.login(user);
-    console.log('DATA', data);
-    
-    const oneHourInMS = 3600 * 1000;
-    const expirationDate = new Date(new Date().getTime() + oneHourInMS);
 
-    localStorage.setItem('token', data.accessToken);
-    localStorage.setItem('expirationDate', expirationDate);
-    localStorage.setItem('firstName', data.user.firstname);
-    localStorage.setItem('lastName', data.user.lastname);
-    localStorage.setItem('email', data.user.email);
-    localStorage.setItem('age', data.user.age);
-    localStorage.setItem('avatar', data.user.avatar);
-
-    props.authSuccess(data.accessToken, data.user);
-    props.autoLogout(oneHourInMS);
+    props.login(user).finally(() => {
+        setOnClickDisabled(false);
+    });
 }
-
-
 
 const LoginContainer = props => {
     const user = { ...localStorage };
+    const [onClickDisabled, setOnClickDisabled] = useState(false);
 
-    if (!!user.token) {
+    if (!!user.token || props.isAuth) {
         return <Navigate to='/' />
     }
 
@@ -53,8 +40,8 @@ const LoginContainer = props => {
                     changeInputElement={props.changeAuth}
                 />
                 <button
-                    disabled={ !props.isFormValid }
-                    onClick={event => loginHandler(event, props.inputControls, props)}
+                    disabled={ !props.isFormValid || onClickDisabled }
+                    onClick={event => loginHandler(event, props.inputControls, props, setOnClickDisabled)}
                 >Log in</button>
             </form>
         </div>
@@ -63,12 +50,12 @@ const LoginContainer = props => {
 
 const mapStateToProps = state => ({
     inputControls: state.form.login.inputControls,
-    isFormValid: state.form.login.isFormValid
+    isFormValid: state.form.login.isFormValid,
+    isAuth: state.auth.isAuth
 })
 const mapDispatchToProps = {
     changeAuth: changeLogin,
-    authSuccess,
-    autoLogout,
+    login
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

@@ -5,42 +5,24 @@ import { logout } from '../../redux/auth-reducer'
 
 const Header = props => {
   const user = { ...localStorage };
-  console.log('isAuth', props.isAuth, user.token);
 
-
-
-//   After reload did not update state
-
-
-  const notValidate = (isAuth, token) => {
-    return !isAuth || !token;
-  }
-
-  if(notValidate(props.isAuth, user.token)) {
-
-  }
-
-    return (
-        <header style={{background: 'yellow', gridArea: 'header'}}>
-          <ul>
-            <li>
-              {
-                !!user.token
-                ? <NavLink to='/user'>{`${user.firstName} ${user.lastName}`}</NavLink>
-                : <NavLink to='/login'>Log in</NavLink>
-              }
-              
-            </li>
-            <li>
-              {
-                !!user.token
-                ? <button onClick={ props.logout }>Log out</button>
-                : <NavLink to='/register'>Log up</NavLink>
-              }
-            </li>
-          </ul>
-        </header>
-    )
+  return (
+      <header style={{background: 'yellow', gridArea: 'header'}}>
+        <ul>
+          {
+            !!user.token
+            ? <li> 
+                <div style={{'fontSize': '18px'}}><NavLink to='/user'>{`${props.firstName} ${props.lastName}`}</NavLink></div>
+                <div><button onClick={ props.logout }>Log out</button></div>
+              </li>
+            : <li>
+                <div><NavLink to='/login'>Login</NavLink></div>
+                <div><NavLink to='/register'>Log up</NavLink></div>
+              </li>
+          }
+        </ul>
+      </header>
+  )
 }
 
 

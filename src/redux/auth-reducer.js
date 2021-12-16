@@ -1,3 +1,5 @@
+import { authAPI } from "../api/api";
+
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
@@ -25,7 +27,13 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuth: false,
-                token: null
+                token: null,
+                id: null,
+                firstName: '',
+                lastName: '',
+                email: '',
+                age: null,
+                avatar: ''
             }
 
         default: return state;
@@ -55,29 +63,38 @@ export const logout = () => {
   localStorage.removeItem('email');
   localStorage.removeItem('age');
   localStorage.removeItem('avatar');
+  
+  localStorage.removeItem('password');
 
   return { type: AUTH_LOGOUT };
 };
 
 export const autoLogout = expireInOneHour => dispatch => {
+    console.log('HERE AUTO LOGOUT', expireInOneHour);
     setTimeout(() => {
         dispatch(logout());
     }, expireInOneHour)
 }
 
-export const autoLogin = () => dispatch => {
-    const token = localStorage.getItem('token');
+export const login = user => async dispatch => {
+    const data = await authAPI.login(user);
+    console.log('DATA', data);
+    
+    const oneHourInMS = 3600 * 1000;
+    const expirationDate = new Date(new Date().getTime() + oneHourInMS);
 
-    if (!token) {
-        dispatch(logout());
-    } else {
-        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+    console.log('LOGIN expirationDate ', expirationDate);
 
-        if (expirationDate <= new Date()) {
-            dispatch(logout());
-        } else {
-            dispatch(authSuccess(token));
-            dispatch(autoLogout((expirationDate - new Date().getTime()) / 1000));
-        }
-    }
+    localStorage.setItem('token', data.accessToken);
+    localStorage.setItem('expirationDate', expirationDate);
+    localStorage.setItem('firstName', data.user.firstname);
+    localStorage.setItem('lastName', data.user.lastname);
+    localStorage.setItem('email', data.user.email);
+    localStorage.setItem('age', data.user.age);
+    localStorage.setItem('avatar', data.user.avatar);
+
+    localStorage.setItem('password', user.password);
+
+    dispatch(authSuccess(data.accessToken, data.user));
+    dispatch(autoLogout(oneHourInMS));
 }

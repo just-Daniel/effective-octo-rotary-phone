@@ -9,15 +9,20 @@ import { Home } from './components/Home/Home';
 import { Navbar } from './components/Navbar/Navbar';
 import PostsContainer from './components/Posts/PostsContainer';
 import User from './components/User/User';
-import { autoLogin } from './redux/auth-reducer'
+import { initializeUser } from './redux/app-reducer';
+import Loader from './UI/Loader/Loader';
 
 class App extends React.Component {
   componentDidMount() {
-    // this.props.autoLogin()
-    // Maybe use redux-persist for save state
+    this.props.initializeUser();
+    // Maybe will use redux-persist for save state initialize
   }
 
   render () {
+    if(!this.props.initialized) {
+      <Loader />
+    }
+
     return (
       <div className="App">
         <div className="app-wrapper">
@@ -41,10 +46,11 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  initialized: state.app.initialized
 })
 
 const mapDispatchToProps = {
-  autoLogin
+  initializeUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
