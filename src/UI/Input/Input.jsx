@@ -24,6 +24,8 @@ const Input = (props) => {
                 onChange={ props.onChange }
                 autoComplete='on'
                 placeholder={ props.placeholder }
+                min={ props.min }
+                max={ props.max }
             />
             {
                 isInvalid(props)

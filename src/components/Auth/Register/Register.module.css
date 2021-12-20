@@ -1,0 +1,34 @@
+/* .imageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.imageContainer > div img {
+  width: 30%;
+} */
+
+.imageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.imageContainer img {
+  width: 155px;
+  height: 155px;
+  padding: 5px;
+
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+.imageContainer img {
+  border: 2px solid;
+}
+.active {
+  background-color: rgb(31, 163, 19);
+}

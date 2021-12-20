@@ -22,5 +22,8 @@ export const announcementAPI = {
 export const authAPI = {
     login (user) {
         return instance.post('login', user).then(res => res.data);
+    },
+    register(user) {
+        return instance.post('register', user).then(res => res.data);
     }
 }

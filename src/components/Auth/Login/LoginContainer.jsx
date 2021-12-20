@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { login } from '../../redux/auth-reducer';
-import { changeLogin } from '../../redux/form-reducer';
-import InputContainer from '../../UI/Input/InputContainer';
+import { login } from '../../../redux/auth-reducer';
+import { changeLogin } from '../../../redux/form-reducer';
+import InputContainer from '../../../UI/Input/InputContainer';
 
 const loginHandler = (event, inputControls, props, setOnClickDisabled) => {
     event.preventDefault();

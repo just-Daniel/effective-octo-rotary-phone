@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import AnnouncementContainer from './components/Announcements/AnnouncementContainer';
-import LoginContainer from './components/Auth/LoginContainer';
+import LoginContainer from './components/Auth/Login/LoginContainer';
+import RegisterContainer from './components/Auth/Register/RegisterContainer';
 import Header from './components/Header/Header';
 import { Home } from './components/Home/Home';
 import { Navbar } from './components/Navbar/Navbar';
@@ -34,6 +35,7 @@ class App extends React.Component {
               <Route path='/posts' element={ <PostsContainer /> } />
               <Route path='/announcements' element={ <AnnouncementContainer /> } />
               <Route path='/login' element={ <LoginContainer /> } />
+              <Route path='/register' element={ <RegisterContainer /> } />
               <Route path='/user' element={ <User /> } />
               <Route path='/' exact element={ <Home /> } />
             </Routes>

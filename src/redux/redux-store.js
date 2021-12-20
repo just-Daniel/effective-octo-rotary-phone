@@ -5,13 +5,15 @@ import { announcementReducer } from './announcement-reducer';
 import { formReducer } from './form-reducer';
 import { authReducer } from './auth-reducer';
 import appReducer from './app-reducer';
+import registerReducer from './register-reducer';
 
 const reducers = combineReducers({
     posts: postsReducers,
     announcements: announcementReducer,
     form: formReducer,
     auth: authReducer,
-    app: appReducer
+    app: appReducer,
+    register: registerReducer
 });
 
 //  Redux browser tools

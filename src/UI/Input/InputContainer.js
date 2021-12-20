@@ -1,8 +1,9 @@
 import React from 'react';
 import Input from './Input';
 import is from 'is_js'
+import { connect } from 'react-redux';
 
-const validateInput = (value, validation) => {
+const validateInput = (value, validation, props) => {
     if (!validation) {
         return true;
     }
@@ -21,6 +22,18 @@ const validateInput = (value, validation) => {
         isValid = value.length >= validation.minLength && isValid;
     }
 
+    // if (validation.password) {
+    //     if(props.confirmPassword.value.length 
+    //         >= props.confirmPassword.validation.minLength
+    //         && props.confirmPassword.touched) {
+    //             isValid = value === props.confirmPassword.value
+    //         }
+    // }
+
+    if(validation.confirmPassword) {
+        isValid = props.password === value
+    }
+
     return isValid;
 }
 
@@ -33,7 +46,7 @@ const InputContainer = props => {
     
         input.value = event.target.value;
         input.touched = true;
-        input.valid = validateInput(input.value, input.validation);
+        input.valid = validateInput(input.value, input.validation, props);
         inputControls[inputName] = input;
     
         let isFormValid = true;
@@ -60,9 +73,16 @@ const InputContainer = props => {
                 touched={ input.touched }
                 errorMessage={ input.errorMessage }
                 type={ input.type }
+                min={ input.min }
+                max={ input.max }
             />
         )
     })
 }
 
-export default InputContainer;
+const mapStateToProps = state => ({
+    password: state.form.register.inputControls.password.value,
+    confirmPassword: state.form.register.inputControls.confirmPassword
+})
+
+export default connect(mapStateToProps)(InputContainer);

@@ -10,31 +10,30 @@ const styleImg = {
     objectFit: 'cover'
 }
 
-const User = () => {
+const User = props => {
     const user = { ...localStorage };
 
     if (!user.token) {
         return <Navigate to='/' />
     }
-    
+
     return (
         <div>
             <h1>Profile</h1>
 
-            <img style={ styleImg } src={user.avatar !== 'undefined' || avatarImg} alt="user avatar" />
+            <img style={ styleImg } src={props.avatar || avatarImg} alt="user avatar" />
 
-            <h3>Name: {user.firstName}</h3>
-            <h3>Surname: {user.lastName}</h3>
+            <h3>Name: {props.firstName}</h3>
+            <h3>Surname: {props.lastName}</h3>
 
-            <p>Age: {user.age}</p>
-            <p>Email: {user.email}</p>
+            <p>Age: {props.age}</p>
+            <p>Email: {props.email}</p>
         </div>
     )
 }
 
-//   Don`t use 
 const mapStateToProps = state => ({
-    avatar: state.auth.avatar,
+    avatar: state.register.isActiveImg,
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
     age: state.auth.age,

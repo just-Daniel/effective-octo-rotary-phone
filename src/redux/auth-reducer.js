@@ -70,7 +70,6 @@ export const logout = () => {
 };
 
 export const autoLogout = expireInOneHour => dispatch => {
-    console.log('HERE AUTO LOGOUT', expireInOneHour);
     setTimeout(() => {
         dispatch(logout());
     }, expireInOneHour)
