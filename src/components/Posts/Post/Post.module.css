@@ -1,0 +1,45 @@
+.Post {
+  background-color: rgb(240, 231, 231, 0.8);
+  border-radius: 20px;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.mainButtons {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 5px;
+}
+.Post button {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px 12px;
+  outline: none;
+  cursor: pointer;
+}
+.mainButtons button.edit {
+  background-color: orange;
+}
+.mainButtons button.edit:hover {
+  background-color: #be8110;
+}
+.mainButtons button.delete {
+  background-color: #ff0000;
+  color: white;
+}
+.mainButtons button.delete:hover {
+  background-color: #c21a1a;
+}
+
+.buttonPostsComment button {
+  margin-left: 20px;
+}
+.buttonPostsComment button.commentBtn {
+  background-color: #cae9ca;
+}
+.buttonPostsComment button.commentBtn:hover {
+  background-color: #9fb69f;
+}

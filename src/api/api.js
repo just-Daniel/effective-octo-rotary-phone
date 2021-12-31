@@ -10,6 +10,12 @@ export const articleAPI = {
     },
     getCountPosts() {
         return instance.get(`posts`).then(res => res.data.length);
+    },
+    submitPost(post) {
+        return instance.post(`posts`, post).then(res => res.data);
+    },
+    deletePost(postId) {
+        return instance.delete(`posts/${postId}`)
     }
 }
 

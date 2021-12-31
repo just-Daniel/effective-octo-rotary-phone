@@ -1,7 +1,7 @@
 const CHANGE_POST = 'CHANGE_POST';
-const SUBMIT_POST = 'SUBMIT_POST';
 const CHANGE_LOGIN = 'CHANGE_LOGIN';
 const CHANGE_REGISTER = 'CHANGE_REGISTER';
+const INIT_STATE_POST = 'INIT_STATE_POST';
 
 const initialState = {
     post: { 
@@ -167,6 +167,12 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
+        case INIT_STATE_POST: {
+            return {
+                ...state,
+                post: initialState.post
+            }
+        }
         case CHANGE_LOGIN: {
             return {
                 ...state,
@@ -215,8 +221,4 @@ export const changeRegister = (inputControls, isFormValid) => ({
     payload: {inputControls, isFormValid}
 })
 
-export const submitPost = () => {
-    console.log('here');
-
-    return { action: SUBMIT_POST }
-}
+export const initStatePost = () => ({type: INIT_STATE_POST});

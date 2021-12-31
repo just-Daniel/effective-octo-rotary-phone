@@ -7,8 +7,8 @@ const Header = props => {
   const user = { ...localStorage };
 
   return (
-      <header style={{background: 'yellow', gridArea: 'header'}}>
-        <ul>
+      <header style={{background: 'yellow', gridArea: 'header', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <ul style={{paddingRight: '20px'}}>
           {
             !!user.token
             ? <li> 
