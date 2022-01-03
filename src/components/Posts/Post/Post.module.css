@@ -43,3 +43,11 @@
 .buttonPostsComment button.commentBtn:hover {
   background-color: #9fb69f;
 }
+
+.Post form .editButtons {
+  padding-left: 2%;
+}
+.Post form .editButtons button.save {
+  background-color: rgb(63, 211, 199);
+  color: #312727;
+}

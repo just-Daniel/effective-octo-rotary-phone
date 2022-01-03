@@ -77,12 +77,9 @@ export const autoLogout = expireInOneHour => dispatch => {
 
 export const login = user => async dispatch => {
     const data = await authAPI.login(user);
-    console.log('DATA', data);
     
     const oneHourInMS = 3600 * 1000;
     const expirationDate = new Date(new Date().getTime() + oneHourInMS);
-
-    console.log('LOGIN expirationDate ', expirationDate);
 
     localStorage.setItem('token', data.accessToken);
     localStorage.setItem('expirationDate', expirationDate);

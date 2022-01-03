@@ -10,7 +10,7 @@ const Header = props => {
       <header style={{background: 'yellow', gridArea: 'header', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
         <ul style={{paddingRight: '20px'}}>
           {
-            !!user.token
+            !!user.token || props.isAuth
             ? <li> 
                 <div style={{'fontSize': '18px'}}><NavLink to='/user'>{`${props.firstName} ${props.lastName}`}</NavLink></div>
                 <div><button onClick={ props.logout }>Log out</button></div>

@@ -2,6 +2,8 @@ const CHANGE_POST = 'CHANGE_POST';
 const CHANGE_LOGIN = 'CHANGE_LOGIN';
 const CHANGE_REGISTER = 'CHANGE_REGISTER';
 const INIT_STATE_POST = 'INIT_STATE_POST';
+const INIT_EDIT_POST_FORM = 'INIT_EDIT_POST_FORM';
+const CHANGE_POST_EDIT = 'CHANGE_POST_EDIT';
 
 const initialState = {
     post: { 
@@ -29,6 +31,37 @@ const initialState = {
                 touched: false,
                 validation: {
                     required: true
+                }
+            }
+        } 
+    },
+    postEdit: { 
+        isFormValid: false,
+        inputControls: {
+            title: {
+                value: '',
+                type: '',
+                errorMessage: 'Enter correct value',
+                label: 'Edit your title:',
+                placeholder: 'Title',
+                valid: false,
+                touched: false,
+                validation: {
+                    required: true,
+                    minLength: 1
+                }
+            }, 
+            body: {
+                value: '',
+                type: '',
+                errorMessage: 'Enter correct value',
+                label: 'Edit your text:',
+                placeholder: 'Text',
+                valid: false,
+                touched: false,
+                validation: {
+                    required: true,
+                    minLength: 1
                 }
             }
         } 
@@ -173,6 +206,39 @@ export const formReducer = (state = initialState, action) => {
                 post: initialState.post
             }
         }
+        case CHANGE_POST_EDIT: {
+            return {
+                ...state,
+                postEdit: {
+                    ...state.postEdit,
+                    isFormValid: action.payload.isFormValid,
+                    inputControls: {
+                        ...state.postEdit.inputControls,
+                        ...action.payload.inputControls
+                    }
+                }
+            }
+        }
+        case INIT_EDIT_POST_FORM: {
+            return {
+                ...state,
+                postEdit: {
+                    ...state.postEdit,
+                    inputControls: {
+                        ...state.postEdit.inputControls,
+                        title: {
+                            ...state.postEdit.inputControls.title,
+                            value: action.payload.title
+                        },
+                        body: {
+                            ...state.postEdit.inputControls.body,
+                            value: action.payload.body
+                        }
+                    }
+                }
+            }
+        }
+
         case CHANGE_LOGIN: {
             return {
                 ...state,
@@ -204,21 +270,44 @@ export const formReducer = (state = initialState, action) => {
     }
 }
 
+//  POST 
+export const initStatePost = () => ({type: INIT_STATE_POST});
 
-
-export const changePost = (inputControls, isFormValid) => ({
+export const changePost = (inputControls, isFormValid) => {
+    return {
     type: CHANGE_POST, 
     payload: {inputControls, isFormValid}
-});
+}};
 
+
+//  POST EDIT
+export const initEditPostForm = post => dispatch => {
+    const payload = {
+        title: post.title,
+        body: post.body
+    }
+
+    dispatch({type: INIT_EDIT_POST_FORM, payload})
+}
+export const changePostEdit = (inputControls, isFormValid) => {
+    return {
+    type: CHANGE_POST_EDIT, 
+    payload: {inputControls, isFormValid}
+}};
+
+
+// LOGIN
 export const changeLogin = (inputControls, isFormValid) => ({
     type: CHANGE_LOGIN, 
     payload: {inputControls, isFormValid}
 });
 
+
+// REGISTER
 export const changeRegister = (inputControls, isFormValid) => ({
     type: CHANGE_REGISTER,
     payload: {inputControls, isFormValid}
 })
 
-export const initStatePost = () => ({type: INIT_STATE_POST});
+
+

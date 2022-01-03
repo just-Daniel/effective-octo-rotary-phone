@@ -5,6 +5,9 @@ const SET_POSTS = 'SET_POSTS';
 const SET_COUNT_POSTS = 'SET_COUNT_POSTS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_EDITING_POST = 'TOGGLE_IS_EDITING_POST';
+const TOGGLE_IS_EDITING_POSTS_ID = 'TOGGLE_IS_EDITING_POSTS_ID';
+const CLOSE_EDITING_POST = 'CLOSE_EDITING_POST';
 
 const initialState = {
     // id: null,
@@ -17,7 +20,8 @@ const initialState = {
     currentPage: 1,
     limitPage: 5,
     countPosts: 0,
-    isFetching: false
+    isFetching: false,
+    isEditingPostsId: [], // {postId: number, isEditing: boolean}
 }
 
 export const postsReducers = (state = initialState, action) => {
@@ -46,6 +50,27 @@ export const postsReducers = (state = initialState, action) => {
                 isFetching: action.payload
             }
         }
+        case TOGGLE_IS_EDITING_POST: {
+            return {
+                ...state,
+                isEditingPost: action.payload
+            }
+        }
+        case TOGGLE_IS_EDITING_POSTS_ID: {
+            return {
+                ...state,
+                isEditingPostsId: action.payload
+            }
+        }
+        case CLOSE_EDITING_POST: {
+            const newState = [...state.isEditingPostsId];
+            const filtered = newState.filter(item => item.postId !== action.payload)
+
+            return {
+                ...state,
+                isEditingPostsId: filtered
+            }
+        }
 
         default: { return state }
     }
@@ -55,6 +80,7 @@ const setPostsAC = posts => ({type: SET_POSTS, posts });
 const setCountPostAC = countPosts => ({type: SET_COUNT_POSTS, payload: countPosts});
 const setCurrentPageAC = currentPage => ({type: SET_CURRENT_PAGE, payload: currentPage});
 const toggleIsFetchingAC = isFetching => ({type: TOGGLE_IS_FETCHING, payload: isFetching});
+const onEditingPostsId = editingPosts => ({type: TOGGLE_IS_EDITING_POSTS_ID, payload: editingPosts});
 
 export const getPosts = (currentPage, limitPage) => async dispatch => {
     dispatch(toggleIsFetchingAC(true))
@@ -112,3 +138,35 @@ export const deletePost = (item, userId, currentPage) => async dispatch => {
     }
     
 }
+
+export const updatePost = (post, editedPost, userId, currentPage) => async dispatch => {
+    
+    if (post.userId === userId) {
+        const updatedPost = {
+            ...post,
+            title: editedPost.title.value,
+            body: editedPost.body.value,
+            updatedAt: new Date().toISOString()
+        }
+
+        await articleAPI.updatePost(updatedPost);
+
+        dispatch(getPosts(currentPage));
+        dispatch(closeEditingPost(post.id));
+    }
+}
+
+export const onEditingPost = (post, isEditingPostsId) => dispatch => {
+    const clickedEdit = isEditingPostsId.find(item => item.postId === post.id);
+
+    if (clickedEdit) {
+        dispatch(closeEditingPost(post.id));
+    } else {
+        isEditingPostsId.push({postId: post.id, isEditing: true});
+        dispatch(onEditingPostsId(isEditingPostsId))
+    }
+}
+
+export const closeEditingPost = postId => ({
+    type: CLOSE_EDITING_POST, payload: postId
+})

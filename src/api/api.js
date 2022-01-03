@@ -16,6 +16,9 @@ export const articleAPI = {
     },
     deletePost(postId) {
         return instance.delete(`posts/${postId}`)
+    },
+    updatePost(post) {
+        return instance.patch(`posts/${post.id}`, post)
     }
 }
 
