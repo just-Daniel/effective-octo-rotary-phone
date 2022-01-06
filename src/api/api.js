@@ -36,3 +36,9 @@ export const authAPI = {
         return instance.post('register', user).then(res => res.data);
     }
 }
+
+export const commentAPI = {
+    getPostComments(postId) {
+        return instance.get(`comments?postId=${postId}&_sort=createdAt&_order=asc`).then(res => res.data);
+    }
+}

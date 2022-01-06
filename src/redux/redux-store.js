@@ -6,14 +6,16 @@ import { formReducer } from './form-reducer';
 import { authReducer } from './auth-reducer';
 import appReducer from './app-reducer';
 import registerReducer from './register-reducer';
+import commentsReducer from './comments-reducer';
 
 const reducers = combineReducers({
-    posts: postsReducers,
-    announcements: announcementReducer,
-    form: formReducer,
-    auth: authReducer,
-    app: appReducer,
-    register: registerReducer
+  posts: postsReducers,
+  announcements: announcementReducer,
+  form: formReducer,
+  auth: authReducer,
+  app: appReducer,
+  register: registerReducer,
+  comments: commentsReducer
 });
 
 //  Redux browser tools

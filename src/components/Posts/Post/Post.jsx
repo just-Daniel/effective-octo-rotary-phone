@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import InputContainer from '../../../UI/Input/InputContainer';
+import CommentsContainer from '../../Comments/CommentsContainer';
 import classes from './Post.module.css';
 
 const Post = props => {
@@ -13,7 +14,7 @@ const Post = props => {
 
     const editingPost = props.isEditingPostsId
             .find(item => item.postId === props.item.id);
-    
+            
     return (
         <div className={classes.Post}>
             {
@@ -42,32 +43,32 @@ const Post = props => {
                         <button 
                             className={classes.save}
                             onClick={ event => props.onSaveEditPost(event, props.item, props.inputsPostEdit, props.userId, props.currentPage, setOnClickDisabled)}
-                            /* disabled={ !props.isFormValid || onClickDisabled } */
+                            disabled={ !props.isFormPostEditValid || onClickDisabled }
                         >Save</button>
                         <button onClick={ event => cancelEditForm(event, props.closeEditingPost) }>Cancel</button>
                     </div>
 
                 </form>
-                : <>
+                : <div>
                     <div>
                         <h1>{ props.item.title }</h1>
                         <p> { props.item.body } </p>
                     </div>
 
                     <div className={classes.buttonPostsComment}>
-                        <button className={classes.commentBtn}>Comments</button>
+                        <button 
+                            className={classes.commentBtn}
+                            onClick={(event) => props.showComments(event, props.item.id, props.isShowingComments)}
+                        >Comments</button>
                     </div>
-                </>
+                    {
+                        props.isShowingComments === props.item.id
+                        && <CommentsContainer />
+                    }
+                </div>
             }
-            {/* <div>
-                <h1>{ props.item.title }</h1>
-                <p> { props.item.body } </p>
-            </div>
 
-            <div className={classes.buttonPostsComment}>
-                <button className={classes.commentBtn}>Comments</button>
-            </div> */}
-        
+            
         </div>
     )
 }

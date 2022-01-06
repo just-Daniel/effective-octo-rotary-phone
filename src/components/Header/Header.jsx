@@ -2,17 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../../redux/auth-reducer'
+import classes from './Header.module.css';
 
 const Header = props => {
   const user = { ...localStorage };
 
   return (
-      <header style={{background: 'yellow', gridArea: 'header', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <ul style={{paddingRight: '20px'}}>
+      <header className={classes.headerContainer}>
+        <ul>
           {
             !!user.token || props.isAuth
             ? <li> 
-                <div style={{'fontSize': '18px'}}><NavLink to='/user'>{`${props.firstName} ${props.lastName}`}</NavLink></div>
+                <div><NavLink to='/user'>{`${props.firstName} ${props.lastName}`}</NavLink></div>
                 <div><button onClick={ props.logout }>Log out</button></div>
               </li>
             : <li>

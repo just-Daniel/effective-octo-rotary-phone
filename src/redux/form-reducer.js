@@ -36,7 +36,7 @@ const initialState = {
         } 
     },
     postEdit: { 
-        isFormValid: false,
+        isFormValid: true,
         inputControls: {
             title: {
                 value: '',

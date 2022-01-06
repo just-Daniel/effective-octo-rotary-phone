@@ -1,0 +1,67 @@
+.CommentsContainer {
+  background-color: rgba(218, 209, 209, 0.5);
+  padding: 5px 20px 5px 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.CommentItem {
+  background-color: #cbe896;
+  border-radius: 30px;
+  position: relative;
+  margin: 10px;
+}
+
+.CommentItem .ButtonsComment {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 3%;
+  padding: 5px;
+}
+.CommentItem .ButtonsComment button.edit {
+  background-color: #f1c167;
+}
+.CommentItem .ButtonsComment button.edit:hover {
+  background-color: #ffa600;
+}
+.CommentItem .ButtonsComment button.delete {
+  background-color: #fd8383;
+}
+.CommentItem .ButtonsComment button.delete:hover {
+  background-color: #ff4646;
+}
+
+.CommentItem .CommentItemContent p {
+  padding: 5px 20px 20px;
+  margin: 0;
+}
+.CommentItem .CommentItemContent time {
+  display: inline-block;
+  position: absolute;
+  right: 6%;
+  bottom: 0;
+  margin-bottom: 2px;
+  font-size: 14px;
+  color: #363636;
+}
+
+.CommentsContainer form {
+  position: relative;
+}
+.CommentsContainer form textarea {
+  width: min(70%, 800px);
+  height: 62px;
+  margin-left: 10px;
+  resize: none;
+  border: 2px green solid;
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+}
+.CommentsContainer form button.create {
+  background-color: rgb(63, 211, 199);
+  color: #312727;
+  margin-left: 1%;
+  position: absolute;
+  top: 5%;
+}

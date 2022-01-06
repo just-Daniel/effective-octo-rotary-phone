@@ -8,6 +8,7 @@ import { submitPost, deletePost, updatePost, onEditingPost, closeEditingPost } f
 import CreatePost from './CreatePost';
 import { Pagination } from '../../UI/Pagination/Pagination';
 import Post from './Post/Post';
+import { getPostComments } from '../../redux/comments-reducer';
 
 class PostsContainer extends React.Component {
     componentDidMount() {
@@ -41,7 +42,14 @@ class PostsContainer extends React.Component {
         event.preventDefault();
         setOnClickDisabled(true);
         
-        this.props.updatePost(post, editedPost, userId, currentPage);
+        this.props.updatePost(post, editedPost, userId, currentPage).finally(() => {
+            setOnClickDisabled(false);
+        });
+    }
+
+    showComments = (event, postId, isShowingComments) => {
+        event.preventDefault();
+        this.props.getPostComments(postId, isShowingComments);
     }
 
     render() {
@@ -83,6 +91,12 @@ class PostsContainer extends React.Component {
 
                             isEditingPostsId={ this.props.isEditingPostsId }
                             closeEditingPost={ this.props.closeEditingPost }
+                            isFormPostEditValid={ this.props.isFormPostEditValid }
+
+                            showComments={ this.showComments }
+                            isFetchingComments={ this.props.isFetchingComments }
+                            isShowingComments={ this.props.isShowingComments }
+                            clickedPostId={ this.props.clickedPostId }
                         />
                     ))
                 }
@@ -108,9 +122,13 @@ const mapStateToProps = state => ({
     isEditingPostsId: state.posts.isEditingPostsId,
     inputsPost: state.form.post.inputControls,
     inputsPostEdit: state.form.postEdit.inputControls,
+    isFormPostEditValid: state.form.postEdit.isFormValid,
     isFormValid: state.form.post.isFormValid,
     userId: state.auth.id,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    isFetchingComments: state.comments.isFetchingComments,
+    isShowingComments: state.comments.isShowingComments,
+    clickedPostId: state.comments.clickedPostId
 })
 
 const mapDispatchToProps = {
@@ -123,7 +141,8 @@ const mapDispatchToProps = {
     changePostEdit,
     updatePost,
     onEditingPost,
-    closeEditingPost
+    closeEditingPost,
+    getPostComments
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
