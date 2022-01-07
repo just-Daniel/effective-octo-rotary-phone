@@ -63,7 +63,7 @@ const Post = props => {
                     </div>
                     {
                         props.isShowingComments === props.item.id
-                        && <CommentsContainer />
+                        && <CommentsContainer postId={props.item.id} />
                     }
                 </div>
             }

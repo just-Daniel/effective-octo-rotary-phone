@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // import Post from './Post/Post';
 import { getPosts, getCountPosts } from '../../redux/posts-reducer'
 import Loader from '../../UI/Loader/Loader';
-import { changePost, changePostEdit, initEditPostForm } from '../../redux/form-reducer';
+import { changePost, changePostEdit, initEditPostForm, initComment } from '../../redux/form-reducer';
 import { submitPost, deletePost, updatePost, onEditingPost, closeEditingPost } from '../../redux/posts-reducer';
 import CreatePost from './CreatePost';
 import { Pagination } from '../../UI/Pagination/Pagination';
@@ -50,6 +50,7 @@ class PostsContainer extends React.Component {
     showComments = (event, postId, isShowingComments) => {
         event.preventDefault();
         this.props.getPostComments(postId, isShowingComments);
+        this.props.initComment();
     }
 
     render() {
@@ -142,7 +143,8 @@ const mapDispatchToProps = {
     updatePost,
     onEditingPost,
     closeEditingPost,
-    getPostComments
+    getPostComments,
+    initComment
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);

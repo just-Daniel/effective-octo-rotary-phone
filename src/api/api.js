@@ -40,5 +40,14 @@ export const authAPI = {
 export const commentAPI = {
     getPostComments(postId) {
         return instance.get(`comments?postId=${postId}&_sort=createdAt&_order=asc`).then(res => res.data);
+    },
+    updateComment(commentId, updateComment) {
+        return instance.patch(`comments/${commentId}`, updateComment).then(res => res.data);
+    },
+    deleteComment(commentId) {
+        return instance.delete(`comments/${commentId}`).then(res => res.data);
+    },
+    submitComment(newComment) {
+        return instance.post(`comments`, newComment).then(res => res.data);
     }
 }

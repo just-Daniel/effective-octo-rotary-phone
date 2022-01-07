@@ -1,9 +1,15 @@
+import { showOnSaveErrorMessage } from "./comments-reducer";
+
 const CHANGE_POST = 'CHANGE_POST';
 const CHANGE_LOGIN = 'CHANGE_LOGIN';
 const CHANGE_REGISTER = 'CHANGE_REGISTER';
 const INIT_STATE_POST = 'INIT_STATE_POST';
 const INIT_EDIT_POST_FORM = 'INIT_EDIT_POST_FORM';
 const CHANGE_POST_EDIT = 'CHANGE_POST_EDIT';
+const CHANGE_COMMENT = 'CHANGE_COMMENT';
+const INIT_COMMENT = 'INIT_COMMENT';
+const INIT_COMMENT_EDIT = 'INIT_COMMENT_EDIT';
+const CHANGE_COMMENT_EDIT = 'CHANGE_COMMENT_EDIT';
 
 const initialState = {
     post: { 
@@ -182,6 +188,28 @@ const initialState = {
                 }
             }
         }
+    },
+    comment: { 
+        value: '',
+        type: 'text',
+        errorMessage: 'Enter correct value',
+        placeholder: 'Write comment...',
+        valid: false,
+        touched: false,
+        validation: {
+            minLength: 1
+        }
+    },
+    commentEdit: { 
+        value: '',
+        type: 'text',
+        errorMessage: 'Enter correct value',
+        placeholder: 'Write comment...',
+        valid: true,
+        touched: false,
+        validation: {
+            minLength: 1
+        }
     }
 };
 
@@ -265,6 +293,33 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
+        case CHANGE_COMMENT: {
+            return {
+                ...state,
+                comment: action.payload
+            }
+        }
+        case INIT_COMMENT: {
+            return {
+                ...state,
+                comment: initialState.comment
+            }
+        }
+        case INIT_COMMENT_EDIT: {
+            return {
+                ...state,
+                commentEdit: {
+                    ...state.commentEdit,
+                    value: action.payload
+                }
+            }
+        }
+        case CHANGE_COMMENT_EDIT: {
+            return {
+                ...state,
+                commentEdit: action.payload
+            }
+        }
 
         default: return state
     }
@@ -309,5 +364,22 @@ export const changeRegister = (inputControls, isFormValid) => ({
     payload: {inputControls, isFormValid}
 })
 
+// COMMENT
 
+export const changeComment = comment => ({
+    type: CHANGE_COMMENT,
+    payload: comment
+})
 
+export const initComment = () => ({type: INIT_COMMENT});
+
+export const initCommentEdit = comment => ({
+        type: INIT_COMMENT_EDIT,
+        payload: comment
+})
+export const changeCommentEdit = comment => dispatch => {
+    if (comment.valid) {
+        dispatch(showOnSaveErrorMessage(false));
+    }
+    dispatch({type: CHANGE_COMMENT_EDIT, payload: comment });
+}

@@ -11,14 +11,14 @@ const Header = props => {
       <header className={classes.headerContainer}>
         <ul>
           {
-            !!user.token || props.isAuth
-            ? <li> 
-                <div><NavLink to='/user'>{`${props.firstName} ${props.lastName}`}</NavLink></div>
-                <div><button onClick={ props.logout }>Log out</button></div>
-              </li>
-            : <li>
+            !(!!user.token || props.isAuth)
+            ? <li>
                 <div><NavLink to='/login'>Login</NavLink></div>
                 <div><NavLink to='/register'>Log up</NavLink></div>
+              </li>
+            : <li> 
+                <div><NavLink to='/user'>{`${props.firstName} ${props.lastName}`}</NavLink></div>
+                <div><button onClick={ props.logout }>Log out</button></div>
               </li>
           }
         </ul>
