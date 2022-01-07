@@ -83,7 +83,7 @@
   /* padding: 0; */
   box-sizing: border-box;
 }
-.CommentItem .CommentItemContent .editCommentErrorMessage {
+.editCommentErrorMessage {
   color: red;
   font-weight: 600;
   margin-left: 20px;

@@ -32,7 +32,7 @@ const Comment = ({comment, ...props}) => {
                                 changeComment={ props.changeCommentEdit }
                             />
                             {
-                                props.showOnSaveError &&
+                                props.showOnSavingEditError &&
                                 <div className={classes.editCommentErrorMessage}>{ props.formCommentEdit.errorMessage }</div>
                             }
                             <div className={classes.editButtons}>

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import classes from './Comments.module.css';
 import Comment from './Comment';
 import Textarea from '../../UI/Textarea/Textarea'
-import { submitComment, onEditComment, onDeleteComment, saveEditComment, showOnSaveErrorMessage } from '../../redux/comments-reducer';
-import { changeComment, initCommentEdit, changeCommentEdit } from '../../redux/form-reducer';
+import { submitComment, onEditComment, onDeleteComment, saveEditComment } from '../../redux/comments-reducer';
+import { changeComment, initCommentEdit, changeCommentEdit, showOnSavingEditErrorMessage, showOnSavingCommentErrorMessage } from '../../redux/form-reducer';
 
 const CommentsContainer = props => {
 
@@ -19,19 +19,20 @@ const CommentsContainer = props => {
         props.onDeleteComment(commentId, postId);
     }
 
-    const submitComment = event => {
+    const submitComment = (event, formComment) => {
         event.preventDefault();
         
-        props.submitComment(props.formComment, props.postId, props.userId);
+        if(!formComment.valid) {
+            props.showOnSavingCommentErrorMessage(true);
+        }
+ 
+        props.submitComment(formComment, props.postId, props.userId);
     }
 
     const onSaveEditComment = (event, commentId, formCommEdit) => {
         event.preventDefault();
         if (!formCommEdit.valid) {
-            return props.showOnSaveErrorMessage(true);
-        }
-        if (props.showOnSaveError && formCommEdit.valid) {
-            props.showOnSaveErrorMessage(false);
+            return props.showOnSavingEditErrorMessage(true);
         }
         
         props.saveEditComment(commentId, formCommEdit);
@@ -57,7 +58,7 @@ const CommentsContainer = props => {
                                 isEditingComment={ props.isEditingComment }
                                 changeCommentEdit={ props.changeCommentEdit }
                                 onEditComment={ props.onEditComment }
-                                showOnSaveError={ props.showOnSaveError }
+                                showOnSavingEditError={ props.showOnSavingEditError }
                                 onSaveEditComment={ onSaveEditComment }
                             />
                         )
@@ -73,9 +74,13 @@ const CommentsContainer = props => {
                     />
                     <button 
                         className={classes.create}
-                        onClick={event => submitComment(event)}
+                        onClick={event => submitComment(event, props.formComment)}
                         
                     >Submit</button>
+                    {
+                        props.showOnSavingCommentError &&
+                        <div className={classes.editCommentErrorMessage}>{ props.formComment.errorMessage }</div>
+                    }
                 </form>
             }
 
@@ -86,11 +91,12 @@ const CommentsContainer = props => {
 const mapStateToProps = state => ({
     comments: state.comments.comments,
     isEditingComment: state.comments.isEditingComment,
-    showOnSaveError: state.comments.showOnSaveError,
     isAuth: state.auth.isAuth,
     userId: state.auth.id,
     formComment: state.form.comment,
-    formCommentEdit: state.form.commentEdit
+    formCommentEdit: state.form.commentEdit,
+    showOnSavingEditError: state.form.commentEdit.showOnSavingEditError,
+    showOnSavingCommentError: state.form.comment.showOnSavingCommentError
 });
 
 const mapDispatchToProps = {
@@ -100,7 +106,8 @@ const mapDispatchToProps = {
     initCommentEdit,
     changeCommentEdit,
     saveEditComment,
-    showOnSaveErrorMessage, 
+    showOnSavingEditErrorMessage, 
+    showOnSavingCommentErrorMessage,
     onDeleteComment
 };
 

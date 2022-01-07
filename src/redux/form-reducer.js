@@ -1,4 +1,4 @@
-import { showOnSaveErrorMessage } from "./comments-reducer";
+// import { showOnSavingEditErrorMessage } from "./comments-reducer";
 
 const CHANGE_POST = 'CHANGE_POST';
 const CHANGE_LOGIN = 'CHANGE_LOGIN';
@@ -10,6 +10,9 @@ const CHANGE_COMMENT = 'CHANGE_COMMENT';
 const INIT_COMMENT = 'INIT_COMMENT';
 const INIT_COMMENT_EDIT = 'INIT_COMMENT_EDIT';
 const CHANGE_COMMENT_EDIT = 'CHANGE_COMMENT_EDIT';
+const SHOW_ON_SAVING_EDIT_ERROR = 'SHOW_ON_SAVING_EDIT_ERROR';
+const SHOW_ON_SAVING_COMMENT_ERROR = 'SHOW_ON_SAVING_COMMENT_ERROR';
+
 
 const initialState = {
     post: { 
@@ -191,6 +194,7 @@ const initialState = {
     },
     comment: { 
         value: '',
+        showOnSavingCommentError: false,
         type: 'text',
         errorMessage: 'Enter correct value',
         placeholder: 'Write comment...',
@@ -202,6 +206,7 @@ const initialState = {
     },
     commentEdit: { 
         value: '',
+        showOnSavingEditError: false,
         type: 'text',
         errorMessage: 'Enter correct value',
         placeholder: 'Write comment...',
@@ -266,7 +271,6 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
-
         case CHANGE_LOGIN: {
             return {
                 ...state,
@@ -320,6 +324,24 @@ export const formReducer = (state = initialState, action) => {
                 commentEdit: action.payload
             }
         }
+        case SHOW_ON_SAVING_EDIT_ERROR: {
+            return {
+                ...state,
+                commentEdit: {
+                    ...state.commentEdit,
+                    showOnSavingEditError: action.payload
+                }
+            }
+        }
+        case SHOW_ON_SAVING_COMMENT_ERROR: {
+            return {
+                ...state,
+                comment: {
+                    ...state.comment,
+                    showOnSavingCommentError: action.payload
+                }
+            }
+        }
 
         default: return state
     }
@@ -366,10 +388,13 @@ export const changeRegister = (inputControls, isFormValid) => ({
 
 // COMMENT
 
-export const changeComment = comment => ({
-    type: CHANGE_COMMENT,
-    payload: comment
-})
+export const changeComment = comment => dispatch => {
+    if (comment.valid && comment.showOnSavingCommentError) {
+        comment.showOnSavingCommentError = false;
+    }
+
+    dispatch({ type: CHANGE_COMMENT, payload: comment });
+}
 
 export const initComment = () => ({type: INIT_COMMENT});
 
@@ -378,8 +403,17 @@ export const initCommentEdit = comment => ({
         payload: comment
 })
 export const changeCommentEdit = comment => dispatch => {
-    if (comment.valid) {
-        dispatch(showOnSaveErrorMessage(false));
+    if (comment.valid && comment.showOnSavingEditError) {
+        comment.showOnSavingEditError = false;
     }
+
     dispatch({type: CHANGE_COMMENT_EDIT, payload: comment });
 }
+
+export const showOnSavingEditErrorMessage = showError => ({
+    type: SHOW_ON_SAVING_EDIT_ERROR, payload: showError
+})
+
+export const showOnSavingCommentErrorMessage = showError => ({
+    type: SHOW_ON_SAVING_COMMENT_ERROR, payload: showError
+})

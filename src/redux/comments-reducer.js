@@ -5,14 +5,12 @@ const SET_POST_COMMENTS = 'SET_POST_COMMENTS';
 const TOGGLE_IS_FETCHING_COMMENTS = 'TOGGLE_IS_FETCHING_COMMENTS';
 const TOGGLE_IS_SHOWING_COMMENTS = 'TOGGLE_IS_SHOWING_COMMENTS';
 const ON_EDIT_COMMENT = 'ON_EDIT_COMMENT';
-const SHOW_ON_SAVE_ERROR = 'SHOW_ON_SAVE_ERROR';
 
 const initialState = {
     comments: [],
     isFetchingComments: false,
     isShowingComments: null,
-    isEditingComment: null,
-    showOnSaveError: false
+    isEditingComment: null
 }
 
 const commentsReducer = (state = initialState, action) => {
@@ -42,12 +40,6 @@ const commentsReducer = (state = initialState, action) => {
                     (state.isEditingComment === action.payload) 
                     ? null
                     : action.payload
-            }
-        }
-        case SHOW_ON_SAVE_ERROR: {
-            return {
-                ...state,
-                showOnSaveError: action.payload
             }
         }
 
@@ -115,9 +107,5 @@ export const onDeleteComment = (commentId, postId) => async dispatch => {
     
     dispatch(getPostComments(postId));
 }
-
-export const showOnSaveErrorMessage = showError => ({
-    type: SHOW_ON_SAVE_ERROR, payload:showError
-})
 
 export default commentsReducer;
