@@ -1,15 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Shizuru&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
-
-.AnnouncementContainer h1 {
-  color: #d54d7b;
-  font-family: "Shizuru", cursive;
-  font-size: 48px;
-  line-height: 38px;
-  margin-bottom: 0px;
-  margin: 20px 30%;
-  text-shadow: 3px -2px 1px #550520;
-}
 
 /*   Create Announcement */
 
@@ -146,4 +135,66 @@
   padding: 3px;
   font-size: 20px;
   text-shadow: 1px -1px 1px #550520;
+}
+
+/*     */
+
+.AnnouncementItem form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  height: 90%;
+}
+.AnnouncementItem form textarea:nth-child(1) {
+  height: 30%;
+  padding: 7px;
+  font-size: 16px;
+  font-weight: 700;
+  outline: none;
+  margin-bottom: 10px;
+  border: 2px solid #550520;
+  border-radius: 0 10px 0 15px;
+  background-color: #d54d7a1a;
+  box-shadow: 0.5px -0.5px 2px #006e8a;
+}
+.AnnouncementItem form textarea:nth-child(2) {
+  height: 70%;
+  box-sizing: border-box;
+  padding: 7px;
+  font-size: 16px;
+  border: 2px solid #550520;
+  border-radius: 15px 0 10px 0;
+  background-color: #d54d7a34;
+  box-shadow: 0.5px -0.5px 2px #8a0000;
+}
+.AnnouncementItem form div button {
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  /* position: relative; */
+  /* display: inline-block; */
+  /* background: #ffffff; */
+  border: 1px solid #333333;
+  border-radius: 50% 6% 20% 4%;
+  outline: none;
+  cursor: pointer;
+  margin: 10px 5px;
+  padding: 3px 6px 0px;
+  font-size: 16px;
+  font-variant: small-caps;
+}
+.AnnouncementItem form div button.submit {
+  /* margin-top: 5px; */
+  background: #d54d7ac7;
+
+  box-shadow: 2px 1px 3px 0.5px #550520;
+}
+.AnnouncementItem form div button.submit:active {
+  background: #c7416d;
+}
+
+.AnnouncementItem form div button.cancel {
+  box-shadow: 2px 1px 3px 0.5px #00e6f6;
+  background: #0896967c;
+}
+.AnnouncementItem form div button.cancel:active {
+  background: #0e7272;
 }

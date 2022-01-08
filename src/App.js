@@ -29,7 +29,7 @@ class App extends React.Component {
         <div className="app-wrapper">
           <Header />
           <Navbar />
-          <div style={{background: 'aliceblue'}} className="main-content">
+          <div className="main-content">
 
             <Routes>
               <Route path='/posts' element={ <PostsContainer /> } />

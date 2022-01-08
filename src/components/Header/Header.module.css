@@ -1,5 +1,11 @@
 .headerContainer {
-  background: #f4b886;
+  background: rgba(112, 83, 21, 0.212);
+  /* background: rgb(34, 193, 195); */
+  background: linear-gradient(
+    180deg,
+    rgba(112, 83, 21, 0.212) 90%,
+    transparent 100% /* rgba(253, 187, 45, 0.63) 100% */
+  );
   grid-area: header;
   display: flex;
   justify-content: flex-end;
@@ -15,4 +21,17 @@
 }
 .headerContainer ul div a {
   color: rgb(72, 73, 70);
+}
+.headerContainer ul div button {
+  border: 1px solid #864e04;
+  border-radius: 2px 5px 2px 2px;
+  padding: 2px 10px;
+  box-shadow: 1px -1px 5px rgb(63, 46, 9);
+  font-weight: 600;
+  color: rgb(237, 252, 228);
+  background-color: #a35e04;
+  outline: none;
+}
+.headerContainer ul div button:active {
+  background-color: #744507;
 }

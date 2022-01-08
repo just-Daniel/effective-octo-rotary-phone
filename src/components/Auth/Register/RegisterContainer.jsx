@@ -7,6 +7,7 @@ import { changeActiveImg } from '../../../redux/register-reducer';
 import classes from './Register.module.css'
 import { authAPI } from '../../../api/api';
 import { Navigate } from 'react-router-dom';
+import '../Auth.module.css'
 
 const profileImgHandler = (event, images, changeActiveImg) => {
     if(event.target.nodeName === 'IMG') {
@@ -51,7 +52,7 @@ const RegisterContainer = props => {
         <div>
             <h1>Register Profile</h1>
             <form>
-                <h3>Select image</h3>
+                <h3>Select image:</h3>
                 <div onClick={event => profileImgHandler(event, props.images, props.changeActiveImg)} className={classes.imageContainer}>
                     {
                         props.images.map((i, index) => (

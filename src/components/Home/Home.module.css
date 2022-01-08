@@ -1,16 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 .homeContainer h1 {
-  font-size: 46px;
-  padding-bottom: 10px;
+  font-size: 72px;
+  padding-bottom: 30px;
 }
 
-.homeContainer ul {
-  margin-left: 10px;
+.homeContainer a {
+  font-family: "Bebas Neue", cursive;
+  letter-spacing: 0.2ch;
+  font-size: 50px;
+  color: rgb(5, 39, 131);
+  text-shadow: 1.5px 1.5px 3px #fff;
 }
-.homeContainer ul li a {
-  color: black;
-  font-size: 36px;
+.homeContainer a:hover {
+  color: rgb(3, 21, 68);
+  text-shadow: 3px 3px 6px #fff;
 }
-.homeContainer ul li a:hover {
-  font-weight: 500;
-  transition-duration: 100ms;
+.homeContainer a:active {
+  color: rgb(28, 67, 173);
+  text-shadow: 0.5px 0.5px 1px #000;
 }

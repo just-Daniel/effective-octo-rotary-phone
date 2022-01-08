@@ -4,7 +4,7 @@ import classes from './Announcement.module.css';
 import Textarea from "../../UI/Textarea/Textarea";
 
 export const Announcement = ({announcement, ...props}) => {
-    
+
     return (
         <div className={classes.AnnouncementItem}>
             
@@ -46,10 +46,12 @@ export const Announcement = ({announcement, ...props}) => {
                 }
                 <div>
                     <button
+                        className={classes.submit}
                         onClick={ event => props.submitEditAnnouncement(event, announcement.id) }
                         disabled={ props.submittingEditedAnn }
                     >Submit</button>
                     <button
+                        className={classes.cancel}
                         onClick={ () => props.onEditAnn(null) }
                     >Cancel</button>
                 </div>

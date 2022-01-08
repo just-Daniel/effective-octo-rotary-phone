@@ -1,9 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 .navContainer {
-  background: red;
   grid-area: "navbar";
   padding: 10px;
 }
 
 .navContainer a {
-  font-size: 23px;
+  font-family: "Bebas Neue", cursive;
+  letter-spacing: 0.2ch;
+  font-size: 30px;
+  color: rgb(5, 39, 131);
+  text-shadow: 1.5px 1.5px 3px #fff;
+}
+.navContainer .item:hover {
+  color: rgb(3, 21, 68);
+  text-shadow: 3px 3px 6px #fff;
+}
+.navContainer .item:active {
+  color: rgb(28, 67, 173);
+  text-shadow: 0.5px 0.5px 1px #000;
+}
+.navContainer .active {
+  font-weight: 700;
+  color: rgb(158, 44, 44);
 }

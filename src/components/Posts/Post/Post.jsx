@@ -51,7 +51,7 @@ const Post = props => {
                 </form>
                 : <div>
                     <div>
-                        <h1>{ props.item.title }</h1>
+                        <h3>{ props.item.title }</h3>
                         <p> { props.item.body } </p>
                     </div>
 

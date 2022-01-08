@@ -34,7 +34,7 @@ const toggleIsFetching = isFetching =>({type: TOGGLE_IS_FETCHING, payload: isFet
 
 export const getAnnouncements = () => async dispatch => {
     dispatch(toggleIsFetching(true));
-    const data = await announcementAPI.getLimitAnnouncements(100);
+    const data = await announcementAPI.getLimitAnnouncements();
 
     dispatch(setAnnouncements(data));
     dispatch(toggleIsFetching(false));

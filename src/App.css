@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Shizuru&display=swap");
+
 .app-wrapper {
   margin: 0 auto;
   display: grid;
@@ -6,6 +8,7 @@
     "navbar content place";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr 2fr;
+  min-height: 100vh;
 }
 
 .main-content {
@@ -37,4 +40,18 @@ textarea {
 }
 p {
   word-wrap: break-word;
+}
+
+h1 {
+  color: #d54d7b;
+  font-family: "Shizuru", cursive;
+  font-size: 48px;
+  line-height: 38px;
+  margin-bottom: 0px;
+  margin: 20px 30%;
+  text-shadow: 3px -2px 1px #550520;
+}
+h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.3ch;
 }

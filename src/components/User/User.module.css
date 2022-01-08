@@ -1,0 +1,24 @@
+div img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-sizing: border-box;
+  border: 8px solid rgb(99, 93, 7);
+  box-shadow: 0px 0px 10px rgb(49, 117, 17);
+  margin: 40px 5px;
+}
+div div h3 span {
+  font-size: 30px;
+}
+
+div p {
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin: 0;
+  margin-top: 10px;
+  font-weight: 500;
+}
+div p span {
+  font-size: 25px;
+}
