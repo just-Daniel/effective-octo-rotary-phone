@@ -10,12 +10,14 @@ const INIT_COMMENT_EDIT = 'INIT_COMMENT_EDIT';
 const CHANGE_COMMENT_EDIT = 'CHANGE_COMMENT_EDIT';
 const SHOW_ON_SAVING_EDIT_ERROR = 'SHOW_ON_SAVING_EDIT_ERROR';
 const SHOW_ON_SAVING_COMMENT_ERROR = 'SHOW_ON_SAVING_COMMENT_ERROR';
-const CHANGE_CREATE_BODY = 'CHANGE_CREATE_BODY';
-const CHANGE_CREATE_TITLE = 'CHANGE_CREATE_TITLE';
+const CHANGE_CREATE_BODY_ANN = 'CHANGE_CREATE_BODY_ANN';
+const CHANGE_CREATE_TITLE_ANN = 'CHANGE_CREATE_TITLE_ANN';
 const SHOW_ON_SAVING_CREATE_ANN_ERROR = 'SHOW_ON_SAVING_CREATE_ANN_ERROR';
 const INIT_CREATE_ANN = 'INIT_CREATE_ANN';
 const SHOW_ON_SAVING_EDIT_ANN_ERROR = 'SHOW_ON_SAVING_EDIT_ANN_ERROR';
-
+const INIT_EDIT_ANN = 'INIT_EDIT_ANN';
+const CHANGE_EDIT_BODY_ANN = 'CHANGE_EDIT_BODY_ANN';
+const CHANGE_EDIT_TITLE_ANN = 'CHANGE_EDIT_TITLE_ANN';
 
 const initialState = {
     post: { 
@@ -247,6 +249,35 @@ const initialState = {
                 minLength: 2
             }
         }
+    },
+    announcementEdit: {
+        isFormValid: true,
+        showOnSaveError: false,
+        title: {
+            value: '',
+            type: 'text',
+            errorMessage: 'Enter correct value',
+            label: 'your title...',
+            placeholder: 'Your title...',
+            valid: true,
+            touched: false,
+            validation: {
+                required: true,
+                minLength: 1
+            }
+        },
+        body: {
+            value: '',
+            type: 'text',
+            errorMessage: 'Enter correct value',
+            placeholder: 'Write text...',
+            valid: true,
+            touched: false,
+            validation: {
+                required: true,
+                minLength: 2
+            }
+        }
     }
 };
 
@@ -374,7 +405,7 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
-        case CHANGE_CREATE_BODY: {
+        case CHANGE_CREATE_BODY_ANN: {
             const titleValid = state.announcement.title.valid;
             const titleAndBodyValid = titleValid && action.payload.valid;
             const showingError = state.announcement.showOnSaveError;
@@ -390,7 +421,7 @@ export const formReducer = (state = initialState, action) => {
                 
             }
         }
-        case CHANGE_CREATE_TITLE: {
+        case CHANGE_CREATE_TITLE_ANN: {
             const bodyValid = state.announcement.body.valid;
             const bodyAndTitleValid = bodyValid && action.payload.valid;
             const showingError = state.announcement.showOnSaveError;
@@ -425,12 +456,59 @@ export const formReducer = (state = initialState, action) => {
             return {
                 ...state,
                 announcementEdit: {
-                    ...state.announcement,
+                    ...state.announcementEdit,
                     showOnSaveError: action.payload
                 }
             }
         }
-        
+        case INIT_EDIT_ANN: {
+            return {
+                ...state,
+                announcementEdit: {
+                    ...state.announcementEdit,
+                    title: { 
+                        ...state.announcementEdit.title,
+                        value: action.payload.title
+                    },
+                    body: { 
+                        ...state.announcementEdit.body,
+                        value: action.payload.body
+                    }
+                }
+            }
+        }
+        case CHANGE_EDIT_BODY_ANN: {
+            const titleValid = state.announcementEdit.title.valid;
+            const titleAndBodyValid = titleValid && action.payload.valid;
+            const showingError = state.announcementEdit.showOnSaveError;
+            
+            return {
+                ...state,
+                announcementEdit: {
+                    ...state.announcementEdit,
+                    isFormValid: titleAndBodyValid,
+                    showOnSaveError: showingError && !titleAndBodyValid,
+                    body: action.payload
+                }
+                
+            }
+        }
+        case CHANGE_EDIT_TITLE_ANN: {
+            const bodyValid = state.announcementEdit.body.valid;
+            const bodyAndTitleValid = bodyValid && action.payload.valid;
+            const showingError = state.announcementEdit.showOnSaveError;
+
+            return {
+                ...state,
+                announcementEdit: {
+                    ...state.announcementEdit,
+                    isFormValid: bodyAndTitleValid,
+                    showOnSaveError: showingError && !bodyAndTitleValid,
+                    title: action.payload
+                }
+                
+            }
+        }
 
         default: return state
     }
@@ -507,21 +585,31 @@ export const showOnSavingCommentErrorMessage = showError => ({
     type: SHOW_ON_SAVING_COMMENT_ERROR, payload: showError
 })
 
-//  Announcement 
-
+//  Announcement Create
 export const changeCreateBody = ann => dispatch => {
-    dispatch({type: CHANGE_CREATE_BODY, payload: ann});
+    dispatch({type: CHANGE_CREATE_BODY_ANN, payload: ann});
 }
-
 export const changeCreateTitle = ann => dispatch => {
-    dispatch({type: CHANGE_CREATE_TITLE, payload: ann});
+    dispatch({type: CHANGE_CREATE_TITLE_ANN, payload: ann});
 }
 
 export const showOnSavingCreateAnnError = showError => ({
     type: SHOW_ON_SAVING_CREATE_ANN_ERROR, payload: showError
 })
+
 export const initCreateAnnouncement = () => ({type: INIT_CREATE_ANN});
 
+//  Announcement Edit
 export const showOnSavingEditAnnError = showError => ({
     type: SHOW_ON_SAVING_EDIT_ANN_ERROR, payload: showError
 })
+
+export const onInitEditAnn = ann => ({
+    type: INIT_EDIT_ANN, payload: ann
+})
+export const changeEditBodyAnn = ann => dispatch => {
+    dispatch({type: CHANGE_EDIT_BODY_ANN, payload: ann});
+}
+export const changeEditTitleAnn = ann => dispatch => {
+    dispatch({type: CHANGE_EDIT_TITLE_ANN, payload: ann});
+}

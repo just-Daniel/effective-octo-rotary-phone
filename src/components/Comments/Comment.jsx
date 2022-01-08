@@ -48,7 +48,7 @@ const Comment = ({comment, ...props}) => {
                             <p>
                                 {comment.body}
                             </p>
-                            <time>{ moment(comment.updatedAt, "YYYYMMDD").fromNow() }</time>
+                            <time>{ moment(comment.updatedAt).startOf().fromNow() }</time>
                         </>
                     }
                 </div>

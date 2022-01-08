@@ -24,10 +24,16 @@ export const articleAPI = {
 
 export const announcementAPI = {
     getLimitAnnouncements (countAnn = 10) {
-        return instance.get(`announcements?_sort=createdAt&_limit=${countAnn}`).then(res=> res.data);
+        return instance.get(`announcements?_sort=createdAt&_order=desc&limit=${countAnn}`).then(res=> res.data);
     },
     submitAnnouncement (ann) {
         return instance.post(`announcements`, ann).then(res => res.data);
+    },
+    updateAnnouncement (annId, ann) {
+        return instance.patch(`announcements/${annId}`, ann).then(res => res.data);
+    },
+    deleteAnnouncement (annId) {
+        return instance.delete(`announcements/${annId}`);
     }
 }
 

@@ -9,7 +9,6 @@ export const Home = props => {
             <ul>
                 <li><NavLink to='/posts'>Article</NavLink></li>
                 <li><NavLink to='/announcements'>Announcement</NavLink></li>
-                <li><NavLink to='123'>123</NavLink></li>
             </ul>
         </div>
     )

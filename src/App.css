@@ -30,3 +30,11 @@ ul {
 a {
   text-decoration: none;
 }
+
+textarea {
+  resize: none;
+  outline: none;
+}
+p {
+  word-wrap: break-word;
+}

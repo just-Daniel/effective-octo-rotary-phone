@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAnnouncements, submitCreateAnnouncement } from "../../redux/announcement-reducer";
+import { getAnnouncements, submitCreateAnnouncement, onEditAnn, onDeleteAnn, submitEditAnnouncement } from "../../redux/announcement-reducer";
 import Loader from "../../UI/Loader/Loader";
 import Textarea from "../../UI/Textarea/Textarea";
 import { Announcement } from "./Announcement";
 import classes from './Announcement.module.css';
-import { changeCreateBody, changeCreateTitle, showOnSavingCreateAnnError } from '../../redux/form-reducer';
+import { changeCreateBody, changeCreateTitle, showOnSavingCreateAnnError, showOnSavingEditAnnError, onInitEditAnn, changeEditBodyAnn, changeEditTitleAnn } from '../../redux/form-reducer';
 import InputItem from "../../UI/Input/InputItem";
 
 class AnnouncementContainer extends React.Component {
@@ -14,9 +14,13 @@ class AnnouncementContainer extends React.Component {
 
         this.changeCreateBodyText = this.changeCreateBodyText.bind(this);
         this.changeCreateTitleText = this.changeCreateTitleText.bind(this);
+        this.onEditClickAnnouncement = this.onEditClickAnnouncement.bind(this);
+        this.submitEditAnnouncement = this.submitEditAnnouncement.bind(this);
+
         this.state = { 
             show: true,
-            submittingCreatedAnn: false
+            submittingCreatedAnn: false,
+            submittingEditedAnn: false
         };
     }
 
@@ -31,7 +35,7 @@ class AnnouncementContainer extends React.Component {
     changeCreateTitleText (data) {
         this.props.changeCreateTitle(data);
     }
-    submitAnnouncement (event) {
+    submitCreateAnnouncement (event) {
         event.preventDefault();
         
         if (!this.props.annCreateIsFormValid) {
@@ -46,6 +50,29 @@ class AnnouncementContainer extends React.Component {
             this.props.userId
         ).finally(() => {
             this.setState({submittingCreatedAnn: false});
+        })
+    }
+
+    onEditClickAnnouncement (ann) {
+        this.props.onEditAnn(ann.id);
+        this.props.onInitEditAnn(ann);
+    }
+
+    submitEditAnnouncement (event, annId) {
+        event.preventDefault();
+        
+        if (!this.props.annEditIsFormValid) {
+            return this.props.showOnSavingEditAnnError(true);
+        }
+
+        this.setState({submittingEditedAnn: true});
+
+        this.props.submitEditAnnouncement(
+            this.props.annEditTitle.value,
+            this.props.annEditBody.value,
+            annId
+        ).finally(() => {
+            this.setState({submittingEditedAnn: false});
         })
     }
 
@@ -81,7 +108,7 @@ class AnnouncementContainer extends React.Component {
                                                 <div className={classes.error}>Please enter correct value!</div>
                                             }
                                             <button
-                                                onClick={ event => this.submitAnnouncement(event) }
+                                                onClick={ event => this.submitCreateAnnouncement(event) }
                                                 disabled={ this.state.submittingCreatedAnn }
                                             >Submit</button>
                                         </form>
@@ -97,6 +124,19 @@ class AnnouncementContainer extends React.Component {
                                         <Announcement
                                             key={ announcement.id }
                                             announcement={ announcement }
+                                            isAuth={ this.props.isAuth }
+                                            userId={ this.props.userId }
+
+                                            onEditClickAnn={ this.onEditClickAnnouncement }
+                                            onEditAnn={ this.props.onEditAnn }
+                                            isEditing={ this.props.isEditing }
+                                            annEditTitle={ this.props.annEditTitle }
+                                            annEditBody={ this.props.annEditBody }
+                                            changeEditTitleAnn={ this.props.changeEditTitleAnn }
+                                            changeEditBodyAnn={ this.props.changeEditBodyAnn }
+                                            submitEditAnnouncement={ this.submitEditAnnouncement }
+                                            submittingEditedAnn={ this.state.submittingEditedAnn }
+                                            onDeleteAnn={ this.props.onDeleteAnn }
                                         />
                                     )   
                                 })
@@ -115,11 +155,15 @@ const mapStateToProps = state => ({
     isAuth: state.auth.isAuth,
     isFetching: state.announcements.isFetching,
     announcements: state.announcements.data,
+    isEditing: state.announcements.isEditing,
     annCreateForm: state.form.announcement,
     annCreateBody: state.form.announcement.body,
     annCreateTitle: state.form.announcement.title,
     annCreateIsFormValid: state.form.announcement.isFormValid,
-    showOnSaveCreateError: state.form.announcement.showOnSaveError
+    showOnSaveCreateError: state.form.announcement.showOnSaveError,
+    annEditTitle: state.form.announcementEdit.title,
+    annEditBody: state.form.announcementEdit.body,
+    annEditIsFormValid: state.form.announcementEdit.isFormValid
 });
 
 const mapDispatchToProps = {
@@ -127,7 +171,14 @@ const mapDispatchToProps = {
     changeCreateBody,
     changeCreateTitle,
     showOnSavingCreateAnnError,
-    submitCreateAnnouncement
+    submitCreateAnnouncement,
+    onInitEditAnn,
+    onEditAnn,
+    changeEditBodyAnn,
+    changeEditTitleAnn,
+    showOnSavingEditAnnError,
+    submitEditAnnouncement,
+    onDeleteAnn
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementContainer)
