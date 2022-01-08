@@ -28,8 +28,8 @@ const Comment = ({comment, ...props}) => {
                         ? <form className={classes.editCommentContainer}>
                             <Textarea 
                                 className={ classes.editTextareaComment }
-                                formComment={ props.formCommentEdit } 
-                                changeComment={ props.changeCommentEdit }
+                                formText={ props.formCommentEdit } 
+                                changeTextHandler={ props.changeCommentEdit }
                             />
                             {
                                 props.showOnSavingEditError &&

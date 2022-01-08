@@ -23,8 +23,11 @@ export const articleAPI = {
 }
 
 export const announcementAPI = {
-    getAnnouncements () {
-        return instance.get(`announcements`).then(res=> res.data);
+    getLimitAnnouncements (countAnn = 10) {
+        return instance.get(`announcements?_sort=createdAt&_limit=${countAnn}`).then(res=> res.data);
+    },
+    submitAnnouncement (ann) {
+        return instance.post(`announcements`, ann).then(res => res.data);
     }
 }
 

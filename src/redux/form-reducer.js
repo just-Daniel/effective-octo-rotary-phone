@@ -1,5 +1,3 @@
-// import { showOnSavingEditErrorMessage } from "./comments-reducer";
-
 const CHANGE_POST = 'CHANGE_POST';
 const CHANGE_LOGIN = 'CHANGE_LOGIN';
 const CHANGE_REGISTER = 'CHANGE_REGISTER';
@@ -12,6 +10,11 @@ const INIT_COMMENT_EDIT = 'INIT_COMMENT_EDIT';
 const CHANGE_COMMENT_EDIT = 'CHANGE_COMMENT_EDIT';
 const SHOW_ON_SAVING_EDIT_ERROR = 'SHOW_ON_SAVING_EDIT_ERROR';
 const SHOW_ON_SAVING_COMMENT_ERROR = 'SHOW_ON_SAVING_COMMENT_ERROR';
+const CHANGE_CREATE_BODY = 'CHANGE_CREATE_BODY';
+const CHANGE_CREATE_TITLE = 'CHANGE_CREATE_TITLE';
+const SHOW_ON_SAVING_CREATE_ANN_ERROR = 'SHOW_ON_SAVING_CREATE_ANN_ERROR';
+const INIT_CREATE_ANN = 'INIT_CREATE_ANN';
+const SHOW_ON_SAVING_EDIT_ANN_ERROR = 'SHOW_ON_SAVING_EDIT_ANN_ERROR';
 
 
 const initialState = {
@@ -215,6 +218,35 @@ const initialState = {
         validation: {
             minLength: 1
         }
+    },
+    announcement: {
+        isFormValid: false,
+        showOnSaveError: false,
+        title: {
+            value: '',
+            type: 'text',
+            errorMessage: 'Enter correct value',
+            label: 'your title...',
+            placeholder: 'Your title...',
+            valid: false,
+            touched: false,
+            validation: {
+                required: true,
+                minLength: 1
+            }
+        },
+        body: {
+            value: '',
+            type: 'text',
+            errorMessage: 'Enter correct value',
+            placeholder: 'Write text...',
+            valid: false,
+            touched: false,
+            validation: {
+                required: true,
+                minLength: 2
+            }
+        }
     }
 };
 
@@ -342,6 +374,63 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
+        case CHANGE_CREATE_BODY: {
+            const titleValid = state.announcement.title.valid;
+            const titleAndBodyValid = titleValid && action.payload.valid;
+            const showingError = state.announcement.showOnSaveError;
+            
+            return {
+                ...state,
+                announcement: {
+                    ...state.announcement,
+                    isFormValid: titleAndBodyValid,
+                    showOnSaveError: showingError && !titleAndBodyValid,
+                    body: action.payload
+                }
+                
+            }
+        }
+        case CHANGE_CREATE_TITLE: {
+            const bodyValid = state.announcement.body.valid;
+            const bodyAndTitleValid = bodyValid && action.payload.valid;
+            const showingError = state.announcement.showOnSaveError;
+
+            return {
+                ...state,
+                announcement: {
+                    ...state.announcement,
+                    isFormValid: bodyAndTitleValid,
+                    showOnSaveError: showingError && !bodyAndTitleValid,
+                    title: action.payload
+                }
+                
+            }
+        }
+        case SHOW_ON_SAVING_CREATE_ANN_ERROR: {
+            return {
+                ...state,
+                announcement: {
+                    ...state.announcement,
+                    showOnSaveError: action.payload
+                }
+            }
+        }
+        case INIT_CREATE_ANN: {
+            return {
+                ...state,
+                announcement: initialState.announcement
+            }
+        }
+        case SHOW_ON_SAVING_EDIT_ANN_ERROR: {
+            return {
+                ...state,
+                announcementEdit: {
+                    ...state.announcement,
+                    showOnSaveError: action.payload
+                }
+            }
+        }
+        
 
         default: return state
     }
@@ -416,4 +505,23 @@ export const showOnSavingEditErrorMessage = showError => ({
 
 export const showOnSavingCommentErrorMessage = showError => ({
     type: SHOW_ON_SAVING_COMMENT_ERROR, payload: showError
+})
+
+//  Announcement 
+
+export const changeCreateBody = ann => dispatch => {
+    dispatch({type: CHANGE_CREATE_BODY, payload: ann});
+}
+
+export const changeCreateTitle = ann => dispatch => {
+    dispatch({type: CHANGE_CREATE_TITLE, payload: ann});
+}
+
+export const showOnSavingCreateAnnError = showError => ({
+    type: SHOW_ON_SAVING_CREATE_ANN_ERROR, payload: showError
+})
+export const initCreateAnnouncement = () => ({type: INIT_CREATE_ANN});
+
+export const showOnSavingEditAnnError = showError => ({
+    type: SHOW_ON_SAVING_EDIT_ANN_ERROR, payload: showError
 })

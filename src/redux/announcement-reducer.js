@@ -1,15 +1,10 @@
 import { announcementAPI } from "../api/api";
+import { initCreateAnnouncement } from "./form-reducer";
 
 const SET_ANNOUNCEMENTS = 'SET_ANNOUNCEMENTS';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState = {
-    // id: null,
-    // userId: null,
-    // title: '',
-    // body: '',
-    // createdAt: '',
-    // updatedAt: ''
     data: [],
     isFetching: false
 }
@@ -30,8 +25,23 @@ const toggleIsFetching = isFetching =>({type: TOGGLE_IS_FETCHING, payload: isFet
 
 export const getAnnouncements = () => async dispatch => {
     dispatch(toggleIsFetching(true));
-    const data = await announcementAPI.getAnnouncements();
+    const data = await announcementAPI.getLimitAnnouncements();
 
+    console.log('data', data);
     dispatch(setAnnouncements(data));
     dispatch(toggleIsFetching(false));
+}
+
+export const submitCreateAnnouncement = (title, body, userId) => async dispatch => {
+    const createdDate = new Date().toISOString();
+    const ann = {
+        createdAt: createdDate,
+        updatedAt: createdDate,
+        title,
+        body,
+        userId
+    }
+
+    await announcementAPI.submitAnnouncement(ann);
+    dispatch(initCreateAnnouncement());
 }

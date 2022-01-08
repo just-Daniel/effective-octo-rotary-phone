@@ -69,8 +69,8 @@ const CommentsContainer = props => {
                 props.isAuth &&
                 <form>
                     <Textarea 
-                        formComment={ props.formComment } 
-                        changeComment={ props.changeComment }
+                        formText={ props.formComment } 
+                        changeTextHandler={ props.changeComment }
                     />
                     <button 
                         className={classes.create}

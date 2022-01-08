@@ -13,7 +13,7 @@ const validateInput = (value, validation) => {
 
     return isValid;
 }
-
+//  Accepts:  formText, changeTextHandler
 const Textarea = props => {
     const onChange = (event, comment) => {
         let newComment = {...comment};
@@ -22,17 +22,17 @@ const Textarea = props => {
         newComment.touched = true;
         newComment.valid = validateInput(newComment.value, newComment.validation);
         
-        props.changeComment(newComment);
+        props.changeTextHandler(newComment);
     }
     
     return (
         <>
             <textarea 
-                type={ props.formComment.type }
-                value={ props.formComment.value }
-                onChange={ event => onChange(event, props.formComment) }
+                type={ props.formText.type }
+                value={ props.formText.value }
+                onChange={ event => onChange(event, props.formText) }
                 autoComplete='on'
-                placeholder={ props.formComment.placeholder }
+                placeholder={ props.formText.placeholder }
             />
         </>
     )
