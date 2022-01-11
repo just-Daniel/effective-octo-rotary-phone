@@ -82,7 +82,7 @@ class PostsContainer extends React.Component {
                         showOnPostError={ this.props.showOnPostError }
                     />
                 }
-
+                <div className={cls.PostsContainer}>
                 { 
                     this.props.posts.map(item => (
                         <Post
@@ -110,6 +110,7 @@ class PostsContainer extends React.Component {
                         />
                     ))
                 }
+                </div>
 
                 <Pagination 
                     countPosts={ this.props.countPosts }

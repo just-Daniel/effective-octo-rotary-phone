@@ -1,5 +1,6 @@
-.Article {
-  /* min-height: 100%; */
+.PostsContainer {
+  width: 90%;
+  margin: 0 auto;
 }
 
 .Post {
@@ -95,6 +96,9 @@
   );
 }
 
+.CreatePost {
+  /* width: 80%; */
+}
 .CreatePost form button {
   padding: 5px 30px;
   font-size: 30px;
@@ -107,4 +111,18 @@
   box-shadow: 6px 0px 0px #8d1287;
   outline: none;
   cursor: pointer;
+}
+
+@media (max-width: 570px) {
+  .Post button {
+    display: inline-block;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  .buttonPostsComment button.commentBtn {
+    padding: 5px 10px;
+  }
+  .Post h3 {
+    font-size: 20px;
+  }
 }

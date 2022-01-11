@@ -32,3 +32,19 @@ form h3 {
   border: 5px solid rgb(124, 20, 20);
   box-shadow: 0px 0px 10px rgb(253, 57, 22);
 }
+
+@media (max-width: 570px) {
+  .imageContainer img {
+    width: 100px;
+    height: 100px;
+    border: 2px solid;
+    padding: 2px;
+  }
+  .imageContainer img.active {
+    border: 2px solid rgb(124, 20, 20);
+  }
+
+  form h3 {
+    font-size: 1.2em;
+  }
+}

@@ -39,7 +39,6 @@ const validateInput = (value, validation, props) => {
 
 //  Accepts: inputControls, changeInputElement, showOnSubmitError
 const InputContainer = props => {
-    console.log('PROPS', props);
     const onFormChanged = (event, inputName) => {
         const inputControls = {...props.inputControls};
         const input = {...inputControls[inputName]};

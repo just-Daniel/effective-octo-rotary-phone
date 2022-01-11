@@ -38,3 +38,9 @@
   font-family: "Sansita Swashed", cursive;
   text-shadow: 0.5px 0.5px 2px #000;
 }
+
+@media (max-width: 570px) {
+  .Input input {
+    width: 95%;
+  }
+}

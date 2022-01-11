@@ -47,7 +47,6 @@ h1 {
   font-family: "Shizuru", cursive;
   font-size: 48px;
   line-height: 38px;
-  margin-bottom: 0px;
   margin: 20px 30%;
   text-shadow: 3px -2px 1px #550520;
 }
@@ -74,17 +73,31 @@ button .save {
 
 @media (max-width: 770px) {
   .app-wrapper {
-    /* display: grid;
+    display: grid;
+    grid-template-rows: 60px 60px 1fr;
+    grid-template-columns: 2fr 10fr 2fr;
     grid-template-areas:
       "header header header"
       "navbar navbar navbar"
-      "place content place";
-    grid-template-rows: 60px 60px 1fr;
-    grid-template-columns: 2fr 10fr 2fr; */
+      ". content .";
     min-height: 100vh;
   }
   .main-content {
     grid-area: content;
     padding: 10px;
+  }
+}
+
+@media (max-width: 570px) {
+  .app-wrapper {
+    grid-template-rows: 60px 30px 1fr;
+  }
+  h1 {
+    font-size: 30px;
+    line-height: 40px;
+    margin: 20px 10%;
+  }
+  h3 {
+    font-size: 20px;
   }
 }

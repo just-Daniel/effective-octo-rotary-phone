@@ -35,3 +35,26 @@
   background-color: #ddd;
   border-radius: 5px;
 }
+
+@media (max-width: 570px) {
+  .pagination {
+    width: 300px;
+  }
+  .pagination span {
+    padding: 8px 8px;
+  }
+  .pagination button {
+    padding: 4px 8px;
+  }
+}
+@media (max-width: 350px) {
+  .pagination {
+    width: 250px;
+  }
+  .pagination span {
+    padding: 4px 4px;
+  }
+  .pagination button {
+    padding: 2px 4px;
+  }
+}

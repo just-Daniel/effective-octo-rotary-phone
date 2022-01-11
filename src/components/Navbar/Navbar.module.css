@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 .navContainer {
-  grid-area: "navbar";
+  grid-area: navbar;
   padding: 10px;
 }
 
@@ -27,7 +27,24 @@
 
 @media (max-width: 770px) {
   .navContainer {
-    grid-area: "navbar";
+    grid-area: navbar;
     padding: 10px;
+  }
+}
+@media (max-width: 570px) {
+  .navContainer a {
+    font-size: 25px;
+  }
+  .navContainer ul {
+    display: flex;
+    justify-content: center;
+  }
+  .navContainer ul li {
+    display: inline-block;
+    padding-left: 20px;
+  }
+  .navContainer ul li:nth-child(1) {
+    padding-right: 20px;
+    border-right: 2px solid;
   }
 }
