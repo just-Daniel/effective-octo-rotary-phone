@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from './Input.module.css';
 
-const isInvalid = ({touched, valid}) => {
-    return touched && !valid
+const isInvalid = ({touched, valid, showOnSubmitError}) => {
+    return /* touched && */ !valid && showOnSubmitError
 }
 
 const Input = (props) => {

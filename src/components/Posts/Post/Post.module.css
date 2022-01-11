@@ -1,8 +1,27 @@
+.Article {
+  /* min-height: 100%; */
+}
+
 .Post {
   background-color: rgb(240, 231, 231, 0.8);
-  border-radius: 20px;
-  margin: 20px 0;
+  border: 3px solid rgb(190, 88, 4);
+  border-image-slice: 1;
+  border-radius: 5px 20px;
+
+  margin: 30px 0;
   padding: 10px;
+  box-shadow: rgba(190, 88, 4, 0.4) 5px 5px, rgba(190, 88, 4, 0.3) 10px 10px,
+    rgba(190, 88, 4, 0.2) 15px 15px, rgba(190, 88, 4, 0.1) 20px 20px,
+    rgba(190, 88, 4, 0.05) 25px 25px,
+    rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.Post h3 {
+  font-size: 32px;
+  padding: 5px;
+  padding-left: 20px;
+  color: rgb(100, 46, 2);
+  text-shadow: 1px 1px 1px #000;
 }
 
 .mainButtons {
@@ -38,7 +57,10 @@
   margin-left: 20px;
 }
 .buttonPostsComment button.commentBtn {
-  background-color: #cae9ca;
+  background-color: #77be77;
+  box-shadow: rgb(38, 57, 77) 0px 10px 10px -10px;
+  padding: 10px 20px;
+  margin: 10px 5px 5px 20px;
 }
 .buttonPostsComment button.commentBtn:hover {
   background-color: #9fb69f;
@@ -46,8 +68,43 @@
 
 .Post form .editButtons {
   padding-left: 2%;
+  color: transparent;
 }
-.Post form .editButtons button.save {
-  background-color: rgb(63, 211, 199);
-  color: #312727;
+.Post form .editButtons button:nth-child(1) {
+  padding: 10px 30px;
+  color: #fff;
+  letter-spacing: 0.3ch;
+  background: linear-gradient(
+    45deg,
+    transparent 15%,
+    #73aa63 20%,
+    #426e6a 80%,
+    transparent 85%,
+    transparent 100%
+  );
+}
+.Post form .editButtons button:nth-child(2) {
+  padding: 10px 20px;
+  background: linear-gradient(
+    45deg,
+    transparent 10%,
+    #c49856 15%,
+    #aa5151 80%,
+    transparent 85%,
+    transparent 100%
+  );
+}
+
+.CreatePost form button {
+  padding: 5px 30px;
+  font-size: 30px;
+  font-family: "Bebas Neue", cursive;
+  background: linear-gradient(45deg, transparent 10%, #6b426e 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  border-radius: 2px 35px 0 27px;
+  box-shadow: 6px 0px 0px #8d1287;
+  outline: none;
+  cursor: pointer;
 }

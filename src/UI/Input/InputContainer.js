@@ -18,28 +18,28 @@ const validateInput = (value, validation, props) => {
         isValid = is.email(value) && isValid;
     }
 
+    if (validation.minValue) {
+        isValid = value >= validation.minValue && isValid;
+    }
+
     if (validation.minLength) {
         isValid = value.length >= validation.minLength && isValid;
     }
 
-    // if (validation.password) {
-    //     if(props.confirmPassword.value.length 
-    //         >= props.confirmPassword.validation.minLength
-    //         && props.confirmPassword.touched) {
-    //             isValid = value === props.confirmPassword.value
-    //         }
-    // }
+    if (validation.password) {
+       isValid = props.confirmPassword === value && isValid;
+    }
 
     if(validation.confirmPassword) {
-        isValid = props.password === value
+        isValid = props.password === value && isValid;
     }
 
     return isValid;
 }
 
+//  Accepts: inputControls, changeInputElement, showOnSubmitError
 const InputContainer = props => {
-    //  Will add active input for change
-    //  Do not show error when prints text
+    console.log('PROPS', props);
     const onFormChanged = (event, inputName) => {
         const inputControls = {...props.inputControls};
         const input = {...inputControls[inputName]};
@@ -52,11 +52,25 @@ const InputContainer = props => {
         let isFormValid = true;
         
         Object.keys(inputControls).map(inputName => {
+            const password = inputControls[inputName].validation.password;
+            const confirmPassword = inputControls[inputName].validation.confirmPassword;
+
+            if (password &&  inputControls[inputName].valid) {
+                const equalValuePassAndConfPass= inputControls[inputName].value === inputControls.confirmPassword.value;
+                inputControls.confirmPassword.valid = equalValuePassAndConfPass; 
+            }
+
+            if (confirmPassword &&  inputControls[inputName].valid) {
+                const equalValuePassAndConfPass= inputControls[inputName].value === inputControls.password.value;
+                inputControls.password.valid = equalValuePassAndConfPass; 
+            }
+
             isFormValid = inputControls[inputName].valid === true && isFormValid;
             return isFormValid
         })
-    
-        props.changeInputElement(inputControls, isFormValid)
+
+        const showOnSubmitError = (!isFormValid && props.showOnSubmitError) ? true : false;
+        props.changeInputElement(inputControls, isFormValid, showOnSubmitError)
     }
 
     return Object.keys(props.inputControls).map((inputName, index) => {
@@ -75,6 +89,7 @@ const InputContainer = props => {
                 type={ input.type }
                 min={ input.min }
                 max={ input.max }
+                showOnSubmitError={props.showOnSubmitError}
             />
         )
     })
@@ -82,7 +97,7 @@ const InputContainer = props => {
 
 const mapStateToProps = state => ({
     password: state.form.register.inputControls.password.value,
-    confirmPassword: state.form.register.inputControls.confirmPassword
+    confirmPassword: state.form.register.inputControls.confirmPassword.value
 })
 
 export default connect(mapStateToProps)(InputContainer);

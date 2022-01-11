@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import InputContainer from '../../../UI/Input/InputContainer';
-import { changeRegister } from '../../../redux/form-reducer';
+import { changeRegister, showOnSubmitRegisterError } from '../../../redux/form-reducer';
 import { login } from '../../../redux/auth-reducer';
 import { changeActiveImg } from '../../../redux/register-reducer';
 import classes from './Register.module.css'
 import { authAPI } from '../../../api/api';
 import { Navigate } from 'react-router-dom';
-import '../Auth.module.css'
+import cls from '../Auth.module.css'
 
 const profileImgHandler = (event, images, changeActiveImg) => {
     if(event.target.nodeName === 'IMG') {
@@ -22,8 +22,12 @@ const profileImgHandler = (event, images, changeActiveImg) => {
     }
 }
 
-const registerHandler = (event, inputControls, isActiveImg, login) => {
+const registerHandler = (event, inputControls, isActiveImg, login, isFormValid, showOnSubmitRegisterError, setOnClickDisabled) => {
     event.preventDefault();
+
+    if (!isFormValid) {
+        return showOnSubmitRegisterError(true);
+    }
    
     const user = {
         email: inputControls.email.value,
@@ -34,14 +38,15 @@ const registerHandler = (event, inputControls, isActiveImg, login) => {
         avatar: isActiveImg
     }
     // const user = { "email": "olivier@mail.com", "password": "bestPassw0rd", "firstname": "Olivier", "lastname": "Monge", "age": 32, "avatar": "https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png" }
-
+    setOnClickDisabled(true);
     authAPI.register(user).then(res => {
         login({email: user.email, password: user.password});
-    })
+    }).finally(() => setOnClickDisabled(false));
 
 }
 
 const RegisterContainer = props => {
+    const [onClickDisabled, setOnClickDisabled] = useState(false);
     const user = {...localStorage};
     
     if (!!user.token || props.isAuth) {
@@ -49,7 +54,7 @@ const RegisterContainer = props => {
     }
 
     return (
-        <div>
+        <div className={cls.Register}>
             <h1>Register Profile</h1>
             <form>
                 <h3>Select image:</h3>
@@ -66,12 +71,19 @@ const RegisterContainer = props => {
                 <InputContainer 
                     inputControls={ props.inputControls }
                     changeInputElement={ props.changeRegister }
+                    showOnSubmitError={ props.showOnSubmitError }
                 />
 
                 <button
-                    disabled={!props.isFormValid}
-                    onClick={(event) => registerHandler(event, props.inputControls, props.isActiveImg, props.login)}
+                    disabled={onClickDisabled}
+                    onClick={(event) => registerHandler(event, props.inputControls, 
+                    props.isActiveImg, props.login, props.isFormValid, 
+                    props.showOnSubmitRegisterError, setOnClickDisabled)}
                 >Register</button>
+                {
+                    props.showOnSubmitError
+                    && <div className='error'>Incorrect values</div>
+                }
             </form>
 
         </div>
@@ -81,6 +93,7 @@ const RegisterContainer = props => {
 const mapStateToProps = state => ({
     inputControls: state.form.register.inputControls,
     isFormValid: state.form.register.isFormValid,
+    showOnSubmitError: state.form.register.showOnSubmitError,
     images: state.register.images,
     isActiveImg: state.register.isActiveImg,
     isAuth: state.auth.isAuth
@@ -89,7 +102,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     changeRegister,
     changeActiveImg,
-    login
+    login,
+    showOnSubmitRegisterError
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);

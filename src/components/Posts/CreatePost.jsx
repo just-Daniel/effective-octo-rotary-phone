@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import InputContainer from '../../UI/Input/InputContainer';
+import cls from './Post/Post.module.css';
 
 const CreatePost = props => {
     const [onClickDisabled, setOnClickDisabled] = useState(false);
 
     return (
-        <form>
-            <h2>Create new post</h2>
+        <div className={cls.CreatePost}>
+            <form>
+                <h2>Create new post</h2>
 
-            <InputContainer 
-                inputControls={ props.inputsPost }
-                changeInputElement={ props.changePost }
-            />
+                <InputContainer 
+                    inputControls={ props.inputsPost }
+                    changeInputElement={ props.changePost }
+                    showOnSubmitError={ props.showOnPostError }
+                />
 
-            <button 
-                onClick={ event => props.createPostHandler(event, setOnClickDisabled) }
-                disabled={ !props.isFormValid || onClickDisabled }
-            >Create</button>
-        </form>
+                <button 
+                    onClick={ event => props.submitPostCreator(event, setOnClickDisabled) }
+                    disabled={ onClickDisabled }
+                >Create</button>
+            </form>
+        </div>
     )
 }
 

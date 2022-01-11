@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import Post from './Post/Post';
 import { getPosts, getCountPosts } from '../../redux/posts-reducer'
 import Loader from '../../UI/Loader/Loader';
-import { changePost, changePostEdit, initEditPostForm, initComment } from '../../redux/form-reducer';
+import { changePost, changePostEdit, initEditPostForm, initComment, showOnSubmitPostError, showOnSubmitEditPostError } from '../../redux/form-reducer';
 import { submitPost, deletePost, updatePost, onEditingPost, closeEditingPost } from '../../redux/posts-reducer';
 import CreatePost from './CreatePost';
 import { Pagination } from '../../UI/Pagination/Pagination';
 import Post from './Post/Post';
 import { getPostComments } from '../../redux/comments-reducer';
+import cls from './Post/Post.module.css';
 
 class PostsContainer extends React.Component {
     componentDidMount() {
@@ -23,11 +23,16 @@ class PostsContainer extends React.Component {
         this.props.getPosts(currentPage, this.props.limitPage)
     }
 
-    createPostHandler = (event, setOnClickDisabled) => {
+    submitPostCreator = (event, setOnClickDisabled) => {
         event.preventDefault();
-        setOnClickDisabled(true);
+        
         const p = this.props;
 
+        if(!p.isFormPostValid) {
+            return p.showOnSubmitPostError(true);
+        }
+
+        setOnClickDisabled(true);
         this.props.submitPost(p.inputsPost, p.userId, p.currentPage).finally(() => {
             setOnClickDisabled(false);
         });
@@ -40,6 +45,11 @@ class PostsContainer extends React.Component {
 
     onSaveEditPost = (event, post, editedPost, userId, currentPage, setOnClickDisabled) => {
         event.preventDefault();
+
+        if(!this.props.isFormEditPostValid) {
+            return this.props.showOnSubmitEditPostError(true);
+        }
+
         setOnClickDisabled(true);
         
         this.props.updatePost(post, editedPost, userId, currentPage).finally(() => {
@@ -53,13 +63,12 @@ class PostsContainer extends React.Component {
         this.props.initComment();
     }
 
-    render() {
-        
+    render() { 
         const {token} = {...localStorage};
         const isAuth = (this.props.isAuth || token);
-        
+
         return (
-            <div>
+            <div className={cls.Article}>
                 {
                     this.props.isFetching && <Loader />
                 }
@@ -69,8 +78,8 @@ class PostsContainer extends React.Component {
                     <CreatePost 
                         inputsPost={ this.props.inputsPost }
                         changePost={ this.props.changePost }
-                        createPostHandler={ this.createPostHandler }
-                        isFormValid={ this.props.isFormValid }
+                        submitPostCreator={ this.submitPostCreator }
+                        showOnPostError={ this.props.showOnPostError }
                     />
                 }
 
@@ -86,13 +95,13 @@ class PostsContainer extends React.Component {
 
                             onClickEditPost={ this.onClickEditPost }
                             onSaveEditPost={ this.onSaveEditPost }
+                            showOnEditPostError={ this.props.showOnEditPostError }
 
                             inputsPostEdit={ this.props.inputsPostEdit }
                             changePost={ this.props.changePostEdit }
 
                             isEditingPostsId={ this.props.isEditingPostsId }
                             closeEditingPost={ this.props.closeEditingPost }
-                            isFormPostEditValid={ this.props.isFormPostEditValid }
 
                             showComments={ this.showComments }
                             isFetchingComments={ this.props.isFetchingComments }
@@ -123,8 +132,10 @@ const mapStateToProps = state => ({
     isEditingPostsId: state.posts.isEditingPostsId,
     inputsPost: state.form.post.inputControls,
     inputsPostEdit: state.form.postEdit.inputControls,
-    isFormPostEditValid: state.form.postEdit.isFormValid,
-    isFormValid: state.form.post.isFormValid,
+    showOnEditPostError: state.form.postEdit.showOnSubmitError,
+    isFormEditPostValid: state.form.postEdit.isFormValid,
+    isFormPostValid: state.form.post.isFormValid,
+    showOnPostError: state.form.post.showOnSubmitError,
     userId: state.auth.id,
     isAuth: state.auth.isAuth,
     isFetchingComments: state.comments.isFetchingComments,
@@ -144,7 +155,9 @@ const mapDispatchToProps = {
     onEditingPost,
     closeEditingPost,
     getPostComments,
-    initComment
+    initComment,
+    showOnSubmitPostError,
+    showOnSubmitEditPostError
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);

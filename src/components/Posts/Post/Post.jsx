@@ -37,13 +37,14 @@ const Post = props => {
                     <InputContainer 
                         inputControls={ props.inputsPostEdit }
                         changeInputElement={ props.changePost }
+                        showOnSubmitError={ props.showOnEditPostError }
                     />
 
                     <div className={classes.editButtons}>
                         <button 
                             className={classes.save}
                             onClick={ event => props.onSaveEditPost(event, props.item, props.inputsPostEdit, props.userId, props.currentPage, setOnClickDisabled)}
-                            disabled={ !props.isFormPostEditValid || onClickDisabled }
+                            disabled={ onClickDisabled }
                         >Save</button>
                         <button onClick={ event => cancelEditForm(event, props.closeEditingPost) }>Cancel</button>
                     </div>

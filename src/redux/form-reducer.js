@@ -1,15 +1,22 @@
 const CHANGE_POST = 'CHANGE_POST';
-const CHANGE_LOGIN = 'CHANGE_LOGIN';
-const CHANGE_REGISTER = 'CHANGE_REGISTER';
 const INIT_STATE_POST = 'INIT_STATE_POST';
+const SHOW_ON_SUBMIT_POST_ERROR = 'SHOW_ON_SUBMIT_POST_ERROR';
+const SHOW_ON_SUBMIT_EDIT_POST_ERROR = 'SHOW_ON_SUBMIT_EDIT_POST_ERROR';
 const INIT_EDIT_POST_FORM = 'INIT_EDIT_POST_FORM';
 const CHANGE_POST_EDIT = 'CHANGE_POST_EDIT';
+
+const CHANGE_LOGIN = 'CHANGE_LOGIN';
+const SHOW_ON_SUBMIT_LOGIN_ERROR = 'SHOW_ON_SUBMIT_LOGIN_ERROR';
+const CHANGE_REGISTER = 'CHANGE_REGISTER';
+const SHOW_ON_SUBMIT_REGISTER_ERROR = 'SHOW_ON_SUBMIT_REGISTER_ERROR';
+
 const CHANGE_COMMENT = 'CHANGE_COMMENT';
 const INIT_COMMENT = 'INIT_COMMENT';
+const SHOW_ON_SAVING_COMMENT_ERROR = 'SHOW_ON_SAVING_COMMENT_ERROR';
 const INIT_COMMENT_EDIT = 'INIT_COMMENT_EDIT';
 const CHANGE_COMMENT_EDIT = 'CHANGE_COMMENT_EDIT';
-const SHOW_ON_SAVING_EDIT_ERROR = 'SHOW_ON_SAVING_EDIT_ERROR';
-const SHOW_ON_SAVING_COMMENT_ERROR = 'SHOW_ON_SAVING_COMMENT_ERROR';
+const SHOW_ON_SAVING_EDIT_COMMENT_ERROR = 'SHOW_ON_SAVING_EDIT_COMMENT_ERROR';
+
 const CHANGE_CREATE_BODY_ANN = 'CHANGE_CREATE_BODY_ANN';
 const CHANGE_CREATE_TITLE_ANN = 'CHANGE_CREATE_TITLE_ANN';
 const SHOW_ON_SAVING_CREATE_ANN_ERROR = 'SHOW_ON_SAVING_CREATE_ANN_ERROR';
@@ -22,6 +29,7 @@ const CHANGE_EDIT_TITLE_ANN = 'CHANGE_EDIT_TITLE_ANN';
 const initialState = {
     post: { 
         isFormValid: false,
+        showOnSubmitError: false,
         inputControls: {
             title: {
                 value: '',
@@ -51,6 +59,7 @@ const initialState = {
     },
     postEdit: { 
         isFormValid: true,
+        showOnSubmitError: false,
         inputControls: {
             title: {
                 value: '',
@@ -82,6 +91,7 @@ const initialState = {
     },
     login: { 
         isFormValid: false,
+        showOnSubmitError: false,
         inputControls: {
             email: {
                 value: '',
@@ -113,12 +123,13 @@ const initialState = {
     },
     register: {
         isFormValid: false,
+        showOnSubmitError: false,
         inputControls: {
             firstName: {
                 value: '',
                 type: 'text',
                 errorMessage: 'Enter correct value',
-                label: 'Input first name:',
+                label: 'First name:',
                 placeholder: 'First name',
                 valid: false,
                 touched: false,
@@ -131,7 +142,7 @@ const initialState = {
                 value: '',
                 type: 'text',
                 errorMessage: 'Enter correct value',
-                label: 'Input last name:',
+                label: 'Last name:',
                 placeholder: 'Last name',
                 valid: false,
                 touched: false,
@@ -143,22 +154,23 @@ const initialState = {
             age: {
                 value: '',
                 type: 'number',
-                errorMessage: 'Enter correct value',
-                label: 'Input age:',
+                errorMessage: 'Min age is 12',
+                label: 'Your age:',
                 placeholder: 'Age',
-                min: 0,
+                min: 12,
                 max: 100,
                 valid: false,
                 touched: false,
                 validation: {
-                    required: true
+                    required: true,
+                    minValue: 12
                 }
             },
             email: {
                 value: '',
                 type: 'email',
                 errorMessage: 'Enter correct value',
-                label: 'Input email:',
+                label: 'Email:',
                 placeholder: 'Email',
                 valid: false,
                 touched: false,
@@ -171,7 +183,7 @@ const initialState = {
                 value: '',
                 type: 'password',
                 errorMessage: 'Enter correct value, min length 6 symbols, and matching passwords',
-                label: 'Input password:',
+                label: 'Password:',
                 placeholder: 'Password',
                 valid: false,
                 touched: false,
@@ -185,7 +197,7 @@ const initialState = {
                 value: '',
                 type: 'password',
                 errorMessage: 'Not matching. Enter correct value!',
-                label: 'Input confirm password:',
+                label: 'Confirm password:',
                 placeholder: 'Confirm password',
                 valid: false,
                 touched: false,
@@ -288,6 +300,7 @@ export const formReducer = (state = initialState, action) => {
                 ...state,
                 post: {
                     ...state.post,
+                    showOnSubmitError: action.payload.showOnSubmitError,
                     isFormValid: action.payload.isFormValid,
                     inputControls: {
                         ...state.post.inputControls,
@@ -302,16 +315,35 @@ export const formReducer = (state = initialState, action) => {
                 post: initialState.post
             }
         }
+        case SHOW_ON_SUBMIT_POST_ERROR: {
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    showOnSubmitError: action.payload
+                }
+            }
+        }
         case CHANGE_POST_EDIT: {
             return {
                 ...state,
                 postEdit: {
                     ...state.postEdit,
+                    showOnSubmitError: action.payload.showOnSubmitError,
                     isFormValid: action.payload.isFormValid,
                     inputControls: {
                         ...state.postEdit.inputControls,
                         ...action.payload.inputControls
                     }
+                }
+            }
+        }
+        case SHOW_ON_SUBMIT_EDIT_POST_ERROR: {
+            return {
+                ...state,
+                postEdit: {
+                    ...state.postEdit,
+                    showOnSubmitError: action.payload
                 }
             }
         }
@@ -339,6 +371,7 @@ export const formReducer = (state = initialState, action) => {
                 ...state,
                 login: {
                     ...state.login,
+                    showOnSubmitError: action.payload.showOnSubmitError,
                     isFormValid: action.payload.isFormValid,
                     inputControls: {
                         ...state.login.inputControls,
@@ -347,16 +380,35 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
+        case SHOW_ON_SUBMIT_LOGIN_ERROR: {
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    showOnSubmitError: action.payload
+                }
+            }
+        }
         case CHANGE_REGISTER: {
             return {
                 ...state,
                 register: {
                     ...state.register,
+                    showOnSubmitError: action.payload.showOnSubmitError,
                     isFormValid: action.payload.isFormValid,
                     inputControls: {
                         ...state.register.inputControls,
                         ...action.payload.inputControls
                     }
+                }
+            }
+        }
+        case SHOW_ON_SUBMIT_REGISTER_ERROR: {
+            return {
+                ...state,
+                register: {
+                    ...state.register,
+                    showOnSubmitError: action.payload
                 }
             }
         }
@@ -387,7 +439,7 @@ export const formReducer = (state = initialState, action) => {
                 commentEdit: action.payload
             }
         }
-        case SHOW_ON_SAVING_EDIT_ERROR: {
+        case SHOW_ON_SAVING_EDIT_COMMENT_ERROR: {
             return {
                 ...state,
                 commentEdit: {
@@ -517,11 +569,14 @@ export const formReducer = (state = initialState, action) => {
 //  POST 
 export const initStatePost = () => ({type: INIT_STATE_POST});
 
-export const changePost = (inputControls, isFormValid) => {
+export const changePost = (inputControls, isFormValid, showOnSubmitError) => {
     return {
     type: CHANGE_POST, 
-    payload: {inputControls, isFormValid}
+    payload: {inputControls, isFormValid, showOnSubmitError}
 }};
+export const showOnSubmitPostError = showError => ({
+    type: SHOW_ON_SUBMIT_POST_ERROR, payload: showError
+})
 
 
 //  POST EDIT
@@ -533,25 +588,35 @@ export const initEditPostForm = post => dispatch => {
 
     dispatch({type: INIT_EDIT_POST_FORM, payload})
 }
-export const changePostEdit = (inputControls, isFormValid) => {
+export const changePostEdit = (inputControls, isFormValid, showOnSubmitError) => {
     return {
     type: CHANGE_POST_EDIT, 
-    payload: {inputControls, isFormValid}
+    payload: {inputControls, isFormValid, showOnSubmitError}
 }};
+export const showOnSubmitEditPostError = showError => ({
+    type: SHOW_ON_SUBMIT_EDIT_POST_ERROR, payload: showError
+})
 
 
 // LOGIN
-export const changeLogin = (inputControls, isFormValid) => ({
+export const changeLogin = (inputControls, isFormValid, showOnSubmitError) => ({
     type: CHANGE_LOGIN, 
-    payload: {inputControls, isFormValid}
+    payload: {inputControls, isFormValid, showOnSubmitError}
 });
+export const showOnSubmitLoginError = showError => ({
+    type: SHOW_ON_SUBMIT_LOGIN_ERROR, payload: showError
+})
 
 
 // REGISTER
-export const changeRegister = (inputControls, isFormValid) => ({
+export const changeRegister = (inputControls, isFormValid, showOnSubmitError) => ({
     type: CHANGE_REGISTER,
-    payload: {inputControls, isFormValid}
+    payload: {inputControls, isFormValid, showOnSubmitError}
 })
+export const showOnSubmitRegisterError = showError => ({
+    type: SHOW_ON_SUBMIT_REGISTER_ERROR, payload: showError
+})
+
 
 // COMMENT
 
@@ -578,7 +643,7 @@ export const changeCommentEdit = comment => dispatch => {
 }
 
 export const showOnSavingEditErrorMessage = showError => ({
-    type: SHOW_ON_SAVING_EDIT_ERROR, payload: showError
+    type: SHOW_ON_SAVING_EDIT_COMMENT_ERROR, payload: showError
 })
 
 export const showOnSavingCommentErrorMessage = showError => ({

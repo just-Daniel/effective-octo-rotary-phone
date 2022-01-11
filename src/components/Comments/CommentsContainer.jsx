@@ -23,7 +23,7 @@ const CommentsContainer = props => {
         event.preventDefault();
         
         if(!formComment.valid) {
-            props.showOnSavingCommentErrorMessage(true);
+            return props.showOnSavingCommentErrorMessage(true);
         }
  
         props.submitComment(formComment, props.postId, props.userId);

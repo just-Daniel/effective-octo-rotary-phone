@@ -24,3 +24,10 @@
   font-weight: 700;
   color: rgb(158, 44, 44);
 }
+
+@media (max-width: 770px) {
+  .navContainer {
+    grid-area: "navbar";
+    padding: 10px;
+  }
+}

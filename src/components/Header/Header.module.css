@@ -1,10 +1,9 @@
 .headerContainer {
   background: rgba(112, 83, 21, 0.212);
-  /* background: rgb(34, 193, 195); */
   background: linear-gradient(
     180deg,
     rgba(112, 83, 21, 0.212) 90%,
-    transparent 100% /* rgba(253, 187, 45, 0.63) 100% */
+    transparent 100%
   );
   grid-area: header;
   display: flex;
@@ -34,4 +33,13 @@
 }
 .headerContainer ul div button:active {
   background-color: #744507;
+}
+
+@media (max-width: 770px) {
+  .headerContainer {
+    grid-area: header;
+    /* display: flex;
+    justify-content: flex-end;
+    align-items: center; */
+  }
 }

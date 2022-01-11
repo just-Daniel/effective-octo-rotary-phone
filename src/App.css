@@ -55,3 +55,36 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.3ch;
 }
+div.error {
+  color: #dd0012;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: "Sansita Swashed", cursive;
+  text-shadow: 0.5px 0.5px 2px #000;
+}
+button[disabled] {
+  background: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+button .save {
+  background-color: rgb(63, 211, 199);
+  color: #312727;
+}
+
+@media (max-width: 770px) {
+  .app-wrapper {
+    /* display: grid;
+    grid-template-areas:
+      "header header header"
+      "navbar navbar navbar"
+      "place content place";
+    grid-template-rows: 60px 60px 1fr;
+    grid-template-columns: 2fr 10fr 2fr; */
+    min-height: 100vh;
+  }
+  .main-content {
+    grid-area: content;
+    padding: 10px;
+  }
+}

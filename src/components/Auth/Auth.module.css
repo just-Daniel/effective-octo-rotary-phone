@@ -1,4 +1,5 @@
-form button {
+.Register form button,
+.Login form button {
   padding: 5px 30px;
   font-size: 30px;
   font-family: "Bebas Neue", cursive;
@@ -10,4 +11,7 @@ form button {
   box-shadow: 6px 0px 0px #ac950f;
   outline: none;
   cursor: pointer;
+}
+.Register {
+  padding-bottom: 100px;
 }

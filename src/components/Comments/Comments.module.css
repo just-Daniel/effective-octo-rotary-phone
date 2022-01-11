@@ -6,7 +6,7 @@
 }
 
 .CommentItem {
-  background-color: #cbe896;
+  background: linear-gradient(45deg, #cbe896, transparent, #cbe896);
   border-radius: 30px;
   position: relative;
   margin: 10px;
