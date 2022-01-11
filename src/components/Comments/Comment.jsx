@@ -22,6 +22,9 @@ const Comment = ({comment, ...props}) => {
                         >Delete</button>
                     </div>
                 }
+                <div className={classes.userInitials}>
+                    { props.getUserInitials(props.users, comment.userId) }
+                </div>
                 <div className={classes.CommentItemContent}>
                     {
                         (props.isEditingComment === comment.id)

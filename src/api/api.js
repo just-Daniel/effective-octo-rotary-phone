@@ -60,3 +60,9 @@ export const commentAPI = {
         return instance.post(`comments`, newComment).then(res => res.data);
     }
 }
+
+export const userAPI = {
+    getAllUsers () {
+        return instance.get(`users`).then(res => res.data);
+    }
+}

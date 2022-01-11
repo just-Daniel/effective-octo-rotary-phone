@@ -96,9 +96,6 @@
   );
 }
 
-.CreatePost {
-  /* width: 80%; */
-}
 .CreatePost form button {
   padding: 5px 30px;
   font-size: 30px;

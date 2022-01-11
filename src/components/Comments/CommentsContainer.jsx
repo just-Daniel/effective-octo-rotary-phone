@@ -38,6 +38,11 @@ const CommentsContainer = props => {
         props.saveEditComment(commentId, formCommEdit);
     }
 
+    const getUserInitials = (users, userId) => {
+        const user = users.find(u => u.id === userId);
+        return `${user.firstname} ${user.lastname}`;
+    }
+
     return (
         <div className={classes.CommentsContainer}>
             <ul>
@@ -60,6 +65,9 @@ const CommentsContainer = props => {
                                 onEditComment={ props.onEditComment }
                                 showOnSavingEditError={ props.showOnSavingEditError }
                                 onSaveEditComment={ onSaveEditComment }
+
+                                users={ props.users }
+                                getUserInitials={ getUserInitials }
                             />
                         )
                     })
@@ -96,7 +104,8 @@ const mapStateToProps = state => ({
     formComment: state.form.comment,
     formCommentEdit: state.form.commentEdit,
     showOnSavingEditError: state.form.commentEdit.showOnSavingEditError,
-    showOnSavingCommentError: state.form.comment.showOnSavingCommentError
+    showOnSavingCommentError: state.form.comment.showOnSavingCommentError,
+    users: state.users.users
 });
 
 const mapDispatchToProps = {

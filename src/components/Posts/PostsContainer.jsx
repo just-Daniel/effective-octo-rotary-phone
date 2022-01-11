@@ -8,6 +8,7 @@ import CreatePost from './CreatePost';
 import { Pagination } from '../../UI/Pagination/Pagination';
 import Post from './Post/Post';
 import { getPostComments } from '../../redux/comments-reducer';
+import { getAllUsers } from '../../redux/users-reducer'
 import cls from './Post/Post.module.css';
 
 class PostsContainer extends React.Component {
@@ -57,8 +58,9 @@ class PostsContainer extends React.Component {
         });
     }
 
-    showComments = (event, postId, isShowingComments) => {
+    showComments = async (event, postId, isShowingComments) => {
         event.preventDefault();
+        await this.props.getAllUsers();
         this.props.getPostComments(postId, isShowingComments);
         this.props.initComment();
     }
@@ -158,7 +160,8 @@ const mapDispatchToProps = {
     getPostComments,
     initComment,
     showOnSubmitPostError,
-    showOnSubmitEditPostError
+    showOnSubmitEditPostError,
+    getAllUsers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);

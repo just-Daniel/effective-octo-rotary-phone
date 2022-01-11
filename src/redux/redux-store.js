@@ -7,6 +7,7 @@ import { authReducer } from './auth-reducer';
 import appReducer from './app-reducer';
 import registerReducer from './register-reducer';
 import commentsReducer from './comments-reducer';
+import usersReducer from './users-reducer';
 
 const reducers = combineReducers({
   posts: postsReducers,
@@ -15,7 +16,8 @@ const reducers = combineReducers({
   auth: authReducer,
   app: appReducer,
   register: registerReducer,
-  comments: commentsReducer
+  comments: commentsReducer,
+  users: usersReducer
 });
 
 //  Redux browser tools
