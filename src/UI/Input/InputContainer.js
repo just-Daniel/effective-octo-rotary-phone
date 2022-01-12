@@ -56,15 +56,20 @@ const InputContainer = props => {
 
             if (password &&  inputControls[inputName].valid) {
                 const equalValuePassAndConfPass= inputControls[inputName].value === inputControls.confirmPassword.value;
-                inputControls.confirmPassword.valid = equalValuePassAndConfPass; 
-            }
 
+                inputControls.confirmPassword.valid = equalValuePassAndConfPass; 
+            }  
             if (confirmPassword &&  inputControls[inputName].valid) {
                 const equalValuePassAndConfPass= inputControls[inputName].value === inputControls.password.value;
                 inputControls.password.valid = equalValuePassAndConfPass; 
-            }
 
+                let isValidAllInputs = Object.keys(inputControls).filter(nameObj => inputControls[nameObj].valid === true).length === 6;
+                isFormValid = isValidAllInputs;
+                
+            }
+            
             isFormValid = inputControls[inputName].valid === true && isFormValid;
+            
             return isFormValid
         })
 

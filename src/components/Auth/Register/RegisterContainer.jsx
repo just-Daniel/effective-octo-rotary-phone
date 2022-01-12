@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import InputContainer from '../../../UI/Input/InputContainer';
-import { changeRegister, showOnSubmitRegisterError } from '../../../redux/form-reducer';
+import { changeRegister, showOnSubmitRegisterError, initialStateRegister } from '../../../redux/form-reducer';
 import { login } from '../../../redux/auth-reducer';
 import { changeActiveImg } from '../../../redux/register-reducer';
 import classes from './Register.module.css'
@@ -22,7 +22,7 @@ const profileImgHandler = (event, images, changeActiveImg) => {
     }
 }
 
-const registerHandler = (event, inputControls, isActiveImg, login, isFormValid, showOnSubmitRegisterError, setOnClickDisabled) => {
+const registerHandler = (event, inputControls, isActiveImg, login, isFormValid, showOnSubmitRegisterError, setOnClickDisabled, initialStateRegister) => {
     event.preventDefault();
 
     if (!isFormValid) {
@@ -41,7 +41,8 @@ const registerHandler = (event, inputControls, isActiveImg, login, isFormValid, 
     setOnClickDisabled(true);
     authAPI.register(user).then(res => {
         login({email: user.email, password: user.password});
-    }).finally(() => setOnClickDisabled(false));
+    }).finally(() => setOnClickDisabled(false))
+    .then(() => initialStateRegister());
 
 }
 
@@ -78,7 +79,7 @@ const RegisterContainer = props => {
                     disabled={onClickDisabled}
                     onClick={(event) => registerHandler(event, props.inputControls, 
                     props.isActiveImg, props.login, props.isFormValid, 
-                    props.showOnSubmitRegisterError, setOnClickDisabled)}
+                    props.showOnSubmitRegisterError, setOnClickDisabled, props.initialStateRegister)}
                 >Register</button>
                 {
                     props.showOnSubmitError
@@ -103,7 +104,8 @@ const mapDispatchToProps = {
     changeRegister,
     changeActiveImg,
     login,
-    showOnSubmitRegisterError
+    showOnSubmitRegisterError,
+    initialStateRegister
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);

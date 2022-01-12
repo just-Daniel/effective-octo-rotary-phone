@@ -7,6 +7,7 @@ const CHANGE_POST_EDIT = 'CHANGE_POST_EDIT';
 
 const CHANGE_LOGIN = 'CHANGE_LOGIN';
 const SHOW_ON_SUBMIT_LOGIN_ERROR = 'SHOW_ON_SUBMIT_LOGIN_ERROR';
+const INIT_REGISTER = 'INIT_REGISTER';
 const CHANGE_REGISTER = 'CHANGE_REGISTER';
 const SHOW_ON_SUBMIT_REGISTER_ERROR = 'SHOW_ON_SUBMIT_REGISTER_ERROR';
 
@@ -412,6 +413,12 @@ export const formReducer = (state = initialState, action) => {
                 }
             }
         }
+        case INIT_REGISTER: {
+            return {
+                ...state,
+                register: initialState.register
+            }
+        }
         case CHANGE_COMMENT: {
             return {
                 ...state,
@@ -609,6 +616,7 @@ export const showOnSubmitLoginError = showError => ({
 
 
 // REGISTER
+export const initialStateRegister = () => ({type: INIT_REGISTER});
 export const changeRegister = (inputControls, isFormValid, showOnSubmitError) => ({
     type: CHANGE_REGISTER,
     payload: {inputControls, isFormValid, showOnSubmitError}

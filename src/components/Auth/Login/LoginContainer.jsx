@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { login } from '../../../redux/auth-reducer';
+import { login, loginServerError } from '../../../redux/auth-reducer';
 import { changeLogin, showOnSubmitLoginError } from '../../../redux/form-reducer';
 import InputContainer from '../../../UI/Input/InputContainer';
 import cls from '../Auth.module.css'
@@ -24,9 +24,11 @@ const loginHandler = (event, inputControls, props, setOnClickDisabled) => {
     //     password: 'bestPassw0rd'
     // }
 
-    props.login(user).finally(() => {
+    props.login(user)
+    .catch(() => props.loginServerError(true))
+    .finally(() => {
         setOnClickDisabled(false);
-    });
+    })
 }
 
 const LoginContainer = props => {
@@ -36,7 +38,7 @@ const LoginContainer = props => {
     if (!!user.token || props.isAuth) {
         return <Navigate to='/' />
     }
-
+    console.log(props.isLoginServerError);
     return (
         <div className={cls.Login}>
             <h1>Authorization</h1>
@@ -51,7 +53,7 @@ const LoginContainer = props => {
                     onClick={event => loginHandler(event, props.inputControls, props, setOnClickDisabled)}
                 >Log in</button>
                 {
-                    props.showOnSubmitError
+                    (props.showOnSubmitError || props.isLoginServerError)
                     && <div className='error'>Incorrect values</div>
                 }
             </form>
@@ -63,12 +65,14 @@ const mapStateToProps = state => ({
     inputControls: state.form.login.inputControls,
     isFormValid: state.form.login.isFormValid,
     showOnSubmitError: state.form.login.showOnSubmitError,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    isLoginServerError: state.auth.isLoginServerError
 })
 const mapDispatchToProps = {
     changeAuth: changeLogin,
     login,
-    showOnSubmitLoginError
+    showOnSubmitLoginError,
+    loginServerError
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

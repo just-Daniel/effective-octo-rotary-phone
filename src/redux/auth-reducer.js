@@ -2,6 +2,7 @@ import { authAPI } from "../api/api";
 
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const AUTH_LOGOUT = 'AUTH_LOGOUT';
+const LOGIN_SERVER_ERROR = 'LOGIN_SERVER_ERROR';
 
 const initialState = {
     isAuth: false,
@@ -11,7 +12,8 @@ const initialState = {
     lastName: '',
     email: '',
     age: null,
-    avatar: ''
+    avatar: '',
+    isLoginServerError: false
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -20,6 +22,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuth: true, 
+                isLoginServerError: false,
                 token: action.payload.token,
                 ...action.payload.userData
             }
@@ -34,6 +37,10 @@ export const authReducer = (state = initialState, action) => {
                 email: '',
                 age: null,
                 avatar: ''
+            }
+        case LOGIN_SERVER_ERROR: 
+            return {
+                ...state, isLoginServerError: action.payload
             }
 
         default: return state;
@@ -94,3 +101,7 @@ export const login = user => async dispatch => {
     dispatch(authSuccess(data.accessToken, data.user));
     dispatch(autoLogout(oneHourInMS));
 }
+
+export const loginServerError = (isError) => ({
+    type: LOGIN_SERVER_ERROR, payload: isError
+})
