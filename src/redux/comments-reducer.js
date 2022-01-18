@@ -13,7 +13,7 @@ const initialState = {
     isEditingComment: null
 }
 
-const commentsReducer = (state = initialState, action) => {
+export const commentsReducer = (state = initialState, action) => {
     switch (action.type) {
         case TOGGLE_IS_FETCHING_COMMENTS: {
             return {
@@ -106,6 +106,4 @@ export const onDeleteComment = (commentId, postId) => async dispatch => {
     await commentAPI.deleteComment(commentId);
     
     dispatch(getPostComments(postId));
-}
-
-export default commentsReducer;
+};

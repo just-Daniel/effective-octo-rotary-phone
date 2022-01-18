@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import InputContainer from '../../../UI/Input/InputContainer';
-import { changeRegister, showOnSubmitRegisterError, initialStateRegister } from '../../../redux/form-reducer';
-import { login } from '../../../redux/auth-reducer';
-import { changeActiveImg } from '../../../redux/register-reducer';
-import classes from './Register.module.css'
-import { authAPI } from '../../../api/api';
 import { Navigate } from 'react-router-dom';
-import cls from '../Auth.module.css'
+import { register } from '../../redux/auth-reducer';
+import InputContainer from '../../UI/Input/InputContainer';
+import { changeActiveImg } from '../../redux/register-reducer';
+import { changeRegister, showOnSubmitRegisterError, initialStateRegister } from '../../redux/form-reducer';
+import classes from './Register.module.css'
 
 const profileImgHandler = (event, images, changeActiveImg) => {
     if(event.target.nodeName === 'IMG') {
@@ -22,7 +20,7 @@ const profileImgHandler = (event, images, changeActiveImg) => {
     }
 }
 
-const registerHandler = (event, inputControls, isActiveImg, login, isFormValid, showOnSubmitRegisterError, setOnClickDisabled, initialStateRegister) => {
+const registerHandler = (event, inputControls, isActiveImg, register, isFormValid, showOnSubmitRegisterError, setOnClickDisabled, initialStateRegister) => {
     event.preventDefault();
 
     if (!isFormValid) {
@@ -37,16 +35,13 @@ const registerHandler = (event, inputControls, isActiveImg, login, isFormValid, 
         age: inputControls.age.value,
         avatar: isActiveImg
     }
-    // const user = { "email": "olivier@mail.com", "password": "bestPassw0rd", "firstname": "Olivier", "lastname": "Monge", "age": 32, "avatar": "https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png" }
+    
     setOnClickDisabled(true);
-    authAPI.register(user).then(res => {
-        login({email: user.email, password: user.password});
-    }).finally(() => setOnClickDisabled(false))
-    .then(() => initialStateRegister());
 
+    register(user).finally(() => setOnClickDisabled(false));
 }
 
-const RegisterContainer = props => {
+const Register = props => {
     const [onClickDisabled, setOnClickDisabled] = useState(false);
     const user = {...localStorage};
     
@@ -55,7 +50,7 @@ const RegisterContainer = props => {
     }
 
     return (
-        <div className={cls.Register}>
+        <div className={classes.Register}>
             <h1>Register Profile</h1>
             <form>
                 <h3>Select image:</h3>
@@ -78,7 +73,7 @@ const RegisterContainer = props => {
                 <button
                     disabled={onClickDisabled}
                     onClick={(event) => registerHandler(event, props.inputControls, 
-                    props.isActiveImg, props.login, props.isFormValid, 
+                    props.isActiveImg, props.register, props.isFormValid, 
                     props.showOnSubmitRegisterError, setOnClickDisabled, props.initialStateRegister)}
                 >Register</button>
                 {
@@ -103,9 +98,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     changeRegister,
     changeActiveImg,
-    login,
+    register,
     showOnSubmitRegisterError,
     initialStateRegister
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

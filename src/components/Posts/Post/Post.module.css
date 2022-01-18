@@ -95,8 +95,26 @@
     transparent 100%
   );
 }
-
-.CreatePost form button {
+.CreateArticleContainer button {
+  padding: 5px 20px;
+  font-size: 30px;
+  font-family: "Bebas Neue", cursive;
+  background: linear-gradient(45deg, transparent 5%, #964808 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  border-radius: 2px 10px 0 0;
+  box-shadow: 6px 0px 0px #f69400;
+  outline: none;
+  cursor: pointer;
+}
+.CreateArticleContainer button:active {
+  background: linear-gradient(45deg, transparent 5%, #703f17 5%);
+}
+.CreatePostForm {
+  margin-top: 20px;
+}
+.CreatePostForm form button {
   padding: 5px 30px;
   font-size: 30px;
   font-family: "Bebas Neue", cursive;

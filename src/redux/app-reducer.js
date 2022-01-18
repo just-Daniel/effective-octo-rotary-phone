@@ -7,7 +7,7 @@ const initialState = {
     initialized: false
 }
 
-const appReducer = (state = initialState, action) => {
+export const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case INITIALIZE_SUCCESS: {
             return {
@@ -46,5 +46,3 @@ export const initializeUser = () => async dispatch => {
         }
     }
 }
-
-export default appReducer;

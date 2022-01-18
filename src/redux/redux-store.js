@@ -1,13 +1,13 @@
+import thunk from 'redux-thunk';
 import { postsReducers } from './posts-reducer';
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import { announcementReducer } from './announcement-reducer';
 import { formReducer } from './form-reducer';
 import { authReducer } from './auth-reducer';
-import appReducer from './app-reducer';
-import registerReducer from './register-reducer';
-import commentsReducer from './comments-reducer';
-import usersReducer from './users-reducer';
+import { appReducer } from './app-reducer';
+import { registerReducer } from './register-reducer';
+import { commentsReducer } from './comments-reducer';
+import { usersReducer } from './users-reducer';
 
 const reducers = combineReducers({
   posts: postsReducers,

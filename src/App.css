@@ -71,6 +71,20 @@ button .save {
   color: #312727;
 }
 
+.Login form button {
+  padding: 5px 30px;
+  font-size: 30px;
+  font-family: "Bebas Neue", cursive;
+  background: linear-gradient(45deg, transparent 10%, #057421 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  border-radius: 2px 35px 0 27px;
+  box-shadow: 6px 0px 0px #ac950f;
+  outline: none;
+  cursor: pointer;
+}
+
 @media (max-width: 770px) {
   .app-wrapper {
     display: grid;

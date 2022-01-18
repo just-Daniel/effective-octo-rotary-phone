@@ -12,7 +12,7 @@ const initialState = {
     isActiveImg: 'https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png'
 }
 
-const registerReducer = (state = initialState, action) => {
+export const registerReducer = (state = initialState, action) => {
     switch (action.type) {
         case CHANGE_ACTIVE_IMG: {
             const activeItem = action.payload.find(i => i.active === true);
@@ -28,6 +28,4 @@ const registerReducer = (state = initialState, action) => {
     }
 }
 
-export const changeActiveImg = (items) => ({type: CHANGE_ACTIVE_IMG, payload: items})
-
-export default registerReducer;
+export const changeActiveImg = (items) => ({type: CHANGE_ACTIVE_IMG, payload: items});

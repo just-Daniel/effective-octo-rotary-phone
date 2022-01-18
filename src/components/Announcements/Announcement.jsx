@@ -3,7 +3,7 @@ import moment from "moment";
 import classes from './Announcement.module.css';
 import Textarea from "../../UI/Textarea/Textarea";
 
-export const Announcement = ({announcement, ...props}) => {
+export const AnnouncementItem = ({announcement, ...props}) => {
 
     return (
         <div className={classes.AnnouncementItem}>

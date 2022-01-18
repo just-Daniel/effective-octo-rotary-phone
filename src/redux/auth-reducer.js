@@ -1,4 +1,5 @@
 import { authAPI } from "../api/api";
+import { initialStateRegister } from "./form-reducer";
 
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const AUTH_LOGOUT = 'AUTH_LOGOUT';
@@ -105,3 +106,10 @@ export const login = user => async dispatch => {
 export const loginServerError = (isError) => ({
     type: LOGIN_SERVER_ERROR, payload: isError
 })
+
+export const register = user => async dispatch => {
+    await authAPI.register(user);
+    
+    dispatch(login({email: user.email, password: user.password}));
+    dispatch(initialStateRegister());
+}

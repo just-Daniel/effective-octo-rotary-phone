@@ -36,8 +36,8 @@ const initialState = {
                 value: '',
                 type: '',
                 errorMessage: 'Enter correct value',
-                label: 'Input title:',
-                placeholder: 'Title',
+                label: 'Enter new title:',
+                placeholder: 'Your title',
                 valid: false,
                 touched: false,
                 validation: {
@@ -48,8 +48,8 @@ const initialState = {
                 value: '',
                 type: '',
                 errorMessage: 'Enter correct value',
-                label: 'Input text:',
-                placeholder: 'Text',
+                label: 'And text:',
+                placeholder: 'Write text...',
                 valid: false,
                 touched: false,
                 validation: {
@@ -68,7 +68,7 @@ const initialState = {
                 errorMessage: 'Enter correct value',
                 label: 'Edit your title:',
                 placeholder: 'Title',
-                valid: false,
+                valid: true,
                 touched: false,
                 validation: {
                     required: true,
@@ -81,7 +81,7 @@ const initialState = {
                 errorMessage: 'Enter correct value',
                 label: 'Edit your text:',
                 placeholder: 'Text',
-                valid: false,
+                valid: true,
                 touched: false,
                 validation: {
                     required: true,
